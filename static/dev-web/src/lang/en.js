@@ -6,6 +6,9 @@ export default {
     foodType: 'FoodType',
     foodInfo: 'FoodInfo',
 
+    story: 'Story',
+    storyFood: 'Story of Food',
+    storyRoom: 'Story of Room',
 
     contact: 'Contact us',
     userInfo: 'UserInfo',

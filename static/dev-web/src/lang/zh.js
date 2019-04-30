@@ -6,6 +6,10 @@ export default {
     foodType: '菜品分类',
     foodInfo: '菜品信息',
 
+    story: '餐厅故事',
+    storyFood: '餐厅故事',
+    storyRoom: '房间故事',
+
     contact: '联系我们',
     userInfo: '个人信息',
   },

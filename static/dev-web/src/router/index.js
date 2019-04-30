@@ -9,6 +9,7 @@ import Layout from '@/components/Layout'
 /* Router Modules */
 import userRouter from './modules/user'
 import foodRouter from './modules/food'
+import storyRouter from './modules/story'
 
 
 /**
@@ -93,6 +94,7 @@ export const asyncRoutes = [
     ]
   },
   foodRouter,
+  storyRouter,
   {
     path: '*',
     redirect: '/404',
