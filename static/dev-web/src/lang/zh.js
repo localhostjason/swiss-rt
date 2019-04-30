@@ -1,20 +1,12 @@
 export default {
   route: {
-    dashboard: '概览',
+    dashboard: '首页图片',
 
     food: '菜品管理',
     foodType: '菜品分类',
     foodInfo: '菜品信息',
 
-    logs: '日志',
-    securityLog: '安全日志',
-    runLog: '运行日志',
-    operateLog: '操作日志',
-
-    system: '系统',
-    export_or_import: '配置导入导出',
-    license: '关于本系统',
-
+    contact: '联系我们',
     userInfo: '个人信息',
   },
   navbar: {

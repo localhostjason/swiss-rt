@@ -50,21 +50,3 @@ class User(db.Model):
     def update_time_ip(self):
         self.login_time = datetime.now()
         self.login_ip = request.remote_addr
-
-
-class Address(db.Model):
-    """
-    收件地址
-    """
-    recipient_name = db.Column(db.String(32))
-    recipient_phone = db.Column(db.String(32))
-
-    province = db.Column(db.String(16))
-    city = db.Column(db.String(16))
-    area = db.Column(db.String(16))
-    address = db.Column(db.String(128))
-
-    is_default = db.Column(db.Boolean, default=False)
-
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User', backref=db.backref('address', lazy='dynamic', cascade='all, delete-orphan'))

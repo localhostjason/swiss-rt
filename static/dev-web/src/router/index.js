@@ -7,7 +7,6 @@ Vue.use(Router);
 import Layout from '@/components/Layout'
 
 /* Router Modules */
-import systemRouter from './modules/system'
 import userRouter from './modules/user'
 import foodRouter from './modules/food'
 
@@ -86,7 +85,7 @@ export const asyncRoutes = [
         name: 'Dashboard',
         meta: {
           title: 'dashboard',
-          icon: 'dashboard',
+          icon: 'home',
           noCache: true,
           affix: true
         }
@@ -94,13 +93,28 @@ export const asyncRoutes = [
     ]
   },
   foodRouter,
-  systemRouter,
   {
     path: '*',
     redirect: '/404',
     hidden: true
   },
-
+  {
+    path: '/contact',
+    component: Layout,
+    redirect: '/contact/us',
+    name: 'Contact',
+    children: [
+      {
+        path: 'us',
+        component: () => import('@/views/contact/index'),
+        name: 'ContactUs',
+        meta: {
+          title: 'contact',
+          icon: 'home',
+        }
+      }
+    ]
+  },
   ...userRouter,
 ];
 

@@ -7,7 +7,7 @@ from api.frontEnd import *
 import os
 import time
 
-from init_data import insert_admin
+from init_data import insert_admin, insert_contact
 
 manager = Manager(app)
 migrate = Migrate(app, db)
@@ -96,6 +96,7 @@ def update_db():
 @manager.command
 def deploy():
     insert_admin()
+    insert_contact()
 
 
 if __name__ == '__main__':

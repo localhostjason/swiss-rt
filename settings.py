@@ -30,18 +30,19 @@ class Settings(Config):
 
     DOMAIN = DomainConfig({
         'user': ResourceConfig(User),
-        'address': ResourceConfig(Address),
 
         'food_type': ResourceConfig(FoodType),
         'food': ResourceConfig(Food),
 
+        'contact': ResourceConfig(Contact),
+
     }).render()
     # dynamic relation cannot be json serialized , relationship backref => model name
-    DOMAIN['user']['datasource']['projection']['address'] = 0
-
-    DOMAIN['address']['schema']['user']['data_relation']['embeddable'] = True
+    # DOMAIN['user']['datasource']['projection']['address'] = 0
 
     DOMAIN['food']['schema']['food_type']['data_relation']['embeddable'] = True
+
+    DOMAIN['contact']['item_methods'] = ['GET', 'PUT', 'PATCH']
 
     OPLOG = True
     OPLOG_NAME = 'OpLog'

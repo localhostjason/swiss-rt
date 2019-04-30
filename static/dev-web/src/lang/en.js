@@ -1,20 +1,13 @@
 export default {
   route: {
-    dashboard: 'Dashboard',
+    dashboard: 'Home image settings',
 
     food: 'Food',
     foodType: 'FoodType',
     foodInfo: 'FoodInfo',
 
-    logs: 'Logs',
-    securityLog: 'SecurityLog',
-    runLog: 'RunLog',
-    operateLog: 'OperateLog',
 
-    system: 'System',
-    export_or_import: 'ExportOrImport',
-    license: 'License',
-
+    contact: 'Contact us',
     userInfo: 'UserInfo',
   },
   navbar: {
