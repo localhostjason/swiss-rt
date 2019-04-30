@@ -7,9 +7,9 @@ Vue.use(Router);
 import Layout from '@/components/Layout'
 
 /* Router Modules */
-import LogRouter from './modules/logs'
 import systemRouter from './modules/system'
 import userRouter from './modules/user'
+import foodRouter from './modules/food'
 
 
 /**
@@ -93,7 +93,7 @@ export const asyncRoutes = [
       }
     ]
   },
-  LogRouter,
+  foodRouter,
   systemRouter,
   {
     path: '*',

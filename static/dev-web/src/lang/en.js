@@ -2,6 +2,10 @@ export default {
   route: {
     dashboard: 'Dashboard',
 
+    food: 'Food',
+    foodType: 'FoodType',
+    foodInfo: 'FoodInfo',
+
     logs: 'Logs',
     securityLog: 'SecurityLog',
     runLog: 'RunLog',

@@ -2,6 +2,10 @@ export default {
   route: {
     dashboard: '概览',
 
+    food: '菜品管理',
+    foodType: '菜品分类',
+    foodInfo: '菜品信息',
+
     logs: '日志',
     securityLog: '安全日志',
     runLog: '运行日志',

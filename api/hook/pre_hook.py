@@ -19,14 +19,16 @@ def add_delete_filters(resource, request, lookup):
 def user_restricted_lookup(resource):
     user = current_app.auth.get_request_auth_value()
     # 获得真正的用户
-    if resource in ['role']:
+    if user.is_admin:
         return {}
 
     if resource == 'user':
         return {'id': user.id}
 
-    # return {'user_id': user.id}
-    return {}
+    if resource in ['food_type', 'food']:
+        return {}
+
+    return {'user_id': user.id}
 
 
 def pre_GET(resource, request, lookup):

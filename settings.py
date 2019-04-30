@@ -2,6 +2,7 @@ from eve_sqlalchemy.config import DomainConfig, ResourceConfig
 from api.models import *
 from config import Config, MY_ROOT_DIR
 import os
+import sys
 
 
 class Settings(Config):
@@ -30,11 +31,24 @@ class Settings(Config):
     DOMAIN = DomainConfig({
         'user': ResourceConfig(User),
         'address': ResourceConfig(Address),
+
+        'food_type': ResourceConfig(FoodType),
+        'food': ResourceConfig(Food),
+
     }).render()
     # dynamic relation cannot be json serialized , relationship backref => model name
     DOMAIN['user']['datasource']['projection']['address'] = 0
 
     DOMAIN['address']['schema']['user']['data_relation']['embeddable'] = True
+
+    DOMAIN['food']['schema']['food_type']['data_relation']['embeddable'] = True
+
+    OPLOG = True
+    OPLOG_NAME = 'OpLog'
+    OPLOG_ENDPOINT = 'OpLog'
+    OPLOG_RETURN_EXTRA_FIELD = False
+    OPLOG_METHODS = ['DELETE', 'POST', 'PATCH', 'PUT', 'GET']
+    sys.modules[OPLOG_NAME] = OpLog
 
     def load_settings(self):
         return {name: getattr(self, name) for name in dir(self) if
