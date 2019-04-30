@@ -2,6 +2,8 @@ export default {
   route: {
     dashboard: 'Home image settings',
 
+    roomInfo: 'Room Info',
+
     food: 'Food',
     foodType: 'FoodType',
     foodInfo: 'FoodInfo',

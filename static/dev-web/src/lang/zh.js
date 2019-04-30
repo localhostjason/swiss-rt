@@ -2,6 +2,8 @@ export default {
   route: {
     dashboard: '首页图片',
 
+    roomInfo: '房间管理',
+
     food: '菜品管理',
     foodType: '菜品分类',
     foodInfo: '菜品信息',

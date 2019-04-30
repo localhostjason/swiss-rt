@@ -93,13 +93,25 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/room',
+    component: Layout,
+    redirect: '/room/info',
+    name: 'Room',
+    children: [
+      {
+        path: 'info',
+        component: () => import('@/views/room/index'),
+        name: 'RoomInfo',
+        meta: {
+          title: 'roomInfo',
+          icon: 'print',
+        }
+      }
+    ]
+  },
   foodRouter,
   storyRouter,
-  {
-    path: '*',
-    redirect: '/404',
-    hidden: true
-  },
   {
     path: '/contact',
     component: Layout,
@@ -116,6 +128,11 @@ export const asyncRoutes = [
         }
       }
     ]
+  },
+  {
+    path: '*',
+    redirect: '/404',
+    hidden: true
   },
   ...userRouter,
 ];

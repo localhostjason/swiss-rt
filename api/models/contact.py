@@ -19,7 +19,8 @@ class Story(db.Model):
 
 
 class Room(db.Model):
-    name = db.Column(db.String(68), unique=True, nullable=True, index=True)
+    number = db.Column(db.Integer, unique=True, nullable=False, index=True)
+    name = db.Column(db.String(68), unique=True, nullable=False, index=True)
 
     story_id = db.Column(db.Integer, db.ForeignKey('story.id'))
     story = db.relationship('Story', backref=db.backref('room', uselist=False))
