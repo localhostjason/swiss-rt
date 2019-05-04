@@ -4,9 +4,10 @@
 
     <el-row>
       <el-col :span="24">
-        <story-table-filter></story-table-filter>
+        <story-table-filter @filterStory="filterStory"></story-table-filter>
         <story-table :data="room"
                      :list-loading="listLoading"
+                     @getRoomList="getRoomList"
         ></story-table>
       </el-col>
     </el-row>
@@ -43,6 +44,10 @@
         this.room = response._items;
         this.listLoading = false;
 
+      },
+      filterStory(params) {
+        this.filter = params;
+        this.getRoomList()
       }
     }
   }

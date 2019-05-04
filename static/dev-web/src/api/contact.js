@@ -25,6 +25,13 @@ export function getStory(params = {}) {
   })
 }
 
+export function getStoryInfo(id) {
+  return request({
+    url: `/story/${id}`,
+    method: 'get',
+  })
+}
+
 
 export function updateStory(id, data) {
   return request({

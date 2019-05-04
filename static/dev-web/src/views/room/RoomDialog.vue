@@ -27,8 +27,6 @@
       <el-button type="primary" @click="updateRoomInfo">确 定</el-button>
     </div>
   </el-dialog>
-
-
 </template>
 
 <script>
