@@ -22,7 +22,7 @@
         >
           <template slot="foot">
             <span>
-              <el-button :disabled="!selectedRomStory.length">删除</el-button>
+              <el-button type='danger' plain :disabled="!selectedRomStory.length">删除</el-button>
             </span>
           </template>
         </table-foot>

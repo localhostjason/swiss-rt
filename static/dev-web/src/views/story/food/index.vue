@@ -8,7 +8,7 @@
       </el-col>
     </el-row>
     <div class="top-line"></div>
-    <div>
+    <div style="margin-bottom: 20px">
       <el-button type="primary" @click="saveStory">保 存</el-button>
     </div>
   </div>

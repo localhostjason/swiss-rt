@@ -9,4 +9,27 @@ export function getRoom(params = {}, embedded = {}, sorts = '') {
 }
 
 
+export function updateRoom(id, data) {
+  return request({
+    url: `/room/${id}`,
+    method: 'patch',
+    data
+  })
+}
+
+export function createRoom(data) {
+  return request({
+    url: `/room`,
+    method: 'post',
+    data
+  })
+}
+
+
+export function deleteRoom(id) {
+  return request({
+    url: `/room/${id}`,
+    method: 'delete',
+  })
+}
 

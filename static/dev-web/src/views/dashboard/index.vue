@@ -79,7 +79,7 @@
 
 <!--</style>-->
 
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
   .el-row {
     .el-col {
       margin: 10px 0;
