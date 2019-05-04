@@ -44,7 +44,7 @@ class Settings(Config):
 
     DOMAIN['food']['schema']['food_type']['data_relation']['embeddable'] = True
 
-    DOMAIN['story']['item_methods'] = ['GET', 'PUT', 'PATCH']
+    # DOMAIN['story']['item_methods'] = ['GET', 'PUT', 'PATCH']
     DOMAIN['contact']['item_methods'] = ['GET', 'PUT', 'PATCH']
 
     OPLOG = True
