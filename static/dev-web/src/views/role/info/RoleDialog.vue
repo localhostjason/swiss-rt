@@ -15,7 +15,7 @@
           <el-form-item label="描述:" prop="desc">
             <el-input v-model="form.desc" type="textarea" :rows="2"></el-input>
           </el-form-item>
-          <el-form-item label="菜单">
+          <el-form-item label="菜单:">
             <el-tree ref="tree" :check-strictly="checkStrictly"
                      :data="routesData"
                      :props="defaultProps"

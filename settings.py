@@ -38,6 +38,7 @@ class Settings(Config):
         'room': ResourceConfig(Room),
         'story': ResourceConfig(Story),
         'contact': ResourceConfig(Contact),
+        'setting': ResourceConfig(Setting),
 
     }).render()
     # dynamic relation cannot be json serialized , relationship backref => model name

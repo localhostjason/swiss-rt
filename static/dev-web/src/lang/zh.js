@@ -15,6 +15,9 @@ export default {
     contact: '联系我们',
     userInfo: '个人信息',
 
+    setting: '设置',
+    settingBase: '基础设置',
+
     roleManage: '权限管理',
     roles: '角色管理',
     users: '账号管理',

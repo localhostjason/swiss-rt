@@ -1,18 +1,19 @@
 import Layout from '@/components/Layout'
 
 const roleRouter = {
-  path: '/users',
+  path: '/role',
   component: Layout,
-  redirect: '/users/roles',
+  redirect: '/role/info',
+  name: 'Role',
   meta: {
     title: 'roleManage',
-    icon: 'cog',
+    icon: 'shield',
   },
   children: [
     {
-      path: 'roles',
+      path: 'info',
       component: () => import('@/views/role/info'),
-      name: 'Roles',
+      name: 'RoleInfo',
       meta: {
         title: 'roles',
         icon: 'list',
@@ -21,7 +22,7 @@ const roleRouter = {
     {
       path: 'manage',
       component: () => import('@/views/role/users'),
-      name: 'Users',
+      name: 'RoleUsers',
       meta: {
         title: 'users',
         icon: 'key'

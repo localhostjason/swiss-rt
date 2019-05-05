@@ -11,6 +11,7 @@ import userRouter from './modules/user'
 import foodRouter from './modules/food'
 import storyRouter from './modules/story'
 import RoleRouter from './modules/role'
+import SettingRouter from './modules/setting'
 
 
 /**
@@ -130,6 +131,7 @@ export const asyncRoutes = [
       }
     ]
   },
+  SettingRouter,
   RoleRouter,
   {
     path: '*',

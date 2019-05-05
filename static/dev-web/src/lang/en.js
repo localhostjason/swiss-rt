@@ -13,7 +13,9 @@ export default {
     storyRoom: 'Story of Room',
 
     contact: 'Contact us',
-    userInfo: 'UserInfo',
+
+    setting: 'Setting',
+    settingBase: 'SettingBase',
 
     roleManage: 'Role Manage',
     roles: 'Roles',
