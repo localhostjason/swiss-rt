@@ -6,6 +6,17 @@ from datetime import datetime
 from .enums import UserType
 
 
+class Role(db.Model):
+    """
+    权限列表，记录admin 后台 用户权限
+    """
+    key = db.Column(db.String(64), unique=True, index=True)
+    name = db.Column(db.String(64), unique=True, index=True)
+    routes = db.Column(db.Text)
+    routes_map = db.Column(db.Text)
+    desc = db.Column(db.String(1024))
+
+
 class User(db.Model):
     username = db.Column(db.String(64), unique=True, index=True)
     _password = db.Column(db.String(128))
@@ -16,10 +27,11 @@ class User(db.Model):
 
     phone = db.Column(db.String(11), index=True)
 
-    role = db.Column(db.String(16), default='ordinary')
-
     login_time = db.Column(db.DateTime)
     login_ip = db.Column(db.String(16))
+
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
+    role = db.relationship('Role', backref=db.backref('user'))
 
     @property
     def password(self):

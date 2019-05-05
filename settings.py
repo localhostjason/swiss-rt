@@ -30,6 +30,7 @@ class Settings(Config):
 
     DOMAIN = DomainConfig({
         'user': ResourceConfig(User),
+        'role': ResourceConfig(Role),
 
         'food_type': ResourceConfig(FoodType),
         'food': ResourceConfig(Food),
@@ -41,6 +42,8 @@ class Settings(Config):
     }).render()
     # dynamic relation cannot be json serialized , relationship backref => model name
     # DOMAIN['user']['datasource']['projection']['address'] = 0
+
+    DOMAIN['user']['schema']['role']['data_relation']['embeddable'] = True
 
     DOMAIN['food']['schema']['food_type']['data_relation']['embeddable'] = True
 

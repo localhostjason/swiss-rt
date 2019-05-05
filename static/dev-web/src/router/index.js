@@ -10,6 +10,7 @@ import Layout from '@/components/Layout'
 import userRouter from './modules/user'
 import foodRouter from './modules/food'
 import storyRouter from './modules/story'
+import RoleRouter from './modules/role'
 
 
 /**
@@ -129,6 +130,7 @@ export const asyncRoutes = [
       }
     ]
   },
+  RoleRouter,
   {
     path: '*',
     redirect: '/404',

@@ -14,6 +14,10 @@ export default {
 
     contact: '联系我们',
     userInfo: '个人信息',
+
+    roleManage: '权限管理',
+    roles: '角色管理',
+    users: '账号管理',
   },
   navbar: {
     logOut: '退出登录',

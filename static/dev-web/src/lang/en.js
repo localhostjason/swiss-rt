@@ -14,6 +14,11 @@ export default {
 
     contact: 'Contact us',
     userInfo: 'UserInfo',
+
+    roleManage: 'Role Manage',
+    roles: 'Roles',
+    users: 'Users',
+
   },
   navbar: {
     logOut: 'Log Out',
