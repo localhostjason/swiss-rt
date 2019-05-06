@@ -126,7 +126,7 @@ export const asyncRoutes = [
         name: 'ContactUs',
         meta: {
           title: 'contact',
-          icon: 'home',
+          icon: 'headphones',
         }
       }
     ]
