@@ -2,6 +2,10 @@ export default {
   route: {
     dashboard: '首页图片',
 
+    reservation: '预约',
+    reservationComplete: '已预约',
+    reservationAwait: '待确认',
+
     roomInfo: '房间管理',
 
     food: '菜品管理',

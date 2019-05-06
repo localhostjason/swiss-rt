@@ -2,6 +2,10 @@ export default {
   route: {
     dashboard: 'Home image settings',
 
+    reservation: 'Reservation',
+    reservationComplete: 'ReservationComplete',
+    reservationAwait: 'ReservationAwait',
+
     roomInfo: 'Room Info',
 
     food: 'Food',

@@ -12,6 +12,7 @@ import foodRouter from './modules/food'
 import storyRouter from './modules/story'
 import RoleRouter from './modules/role'
 import SettingRouter from './modules/setting'
+import ReservationRouter from './modules/reservation'
 
 
 /**
@@ -95,6 +96,7 @@ export const asyncRoutes = [
       }
     ]
   },
+  ReservationRouter,
   {
     path: '/room',
     component: Layout,
