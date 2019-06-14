@@ -21,21 +21,13 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // Do something before request is sent
     if (store.getters.token) {
-      // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
       config.headers['Authorization'] = `Bearer ${store.getters.token}`;
-    }
-
-    if (store.getters.asUser) {
-      config.headers['Iguard-AsUser'] = store.getters.asUser
     }
 
     return config
   },
   error => {
-    // Do something with request error
-    console.log('demo_error', error); // for debug
     Promise.reject(error)
   }
 );
@@ -45,13 +37,9 @@ service.interceptors.response.use(
   // todo mock js response
   // response => response.data,
 
-  // 真实的 后台 response
   response => {
     const res = response.data;
-    // let status = response.status;
-    // console.log(res)
 
-    // 后台额外返回 错误 code
     if (res.errcode) {
       Message({
         message: `错误：${res.errmsg}`,
