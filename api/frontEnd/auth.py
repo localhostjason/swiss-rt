@@ -2,6 +2,7 @@ from flask import request, jsonify
 from .. import app, db
 from api.models.user import User
 from ..flask_auth import requires_auth
+from .message import *
 
 
 @app.route('/api/register', methods=['POST'])
@@ -12,15 +13,15 @@ def register():
     password = req_data.get('password')
 
     if not phone or not password:
-        return jsonify({'success': False, 'errmsg': '用户名或者密码不能为空'})
+        return jsonify(error_message('用户名或者密码不能为空')), 422
 
     old_user = User.query.filter_by(phone=phone).first()
     if old_user:
-        return jsonify({'success': False, 'errmsg': '用户名已存在'})
+        return jsonify(error_message('用户名已存在')), 422
 
     user = User(phone=phone, password=password)
     db.session.add(user)
-    return jsonify({'success': True, 'errmsg': None})
+    return jsonify(ok_message())
 
 
 @app.route('/api/login', methods=['POST'])
@@ -35,9 +36,9 @@ def login():
         token = user.generate_auth_token(expiration=36000).decode('ascii')
         user.token = token
         user.update_time_ip()
-        return jsonify({'success': True, 'errmsg': None, 'token': token})
+        return jsonify(ok_message({'token': token}))
 
-    return jsonify({'success': False, 'errmsg': '用户名或者密码错误'})
+    return jsonify(error_message('用户名或者密码错误')), 422
 
 
 @app.route('/api/user_info', methods=['get'])
@@ -46,9 +47,9 @@ def get_user_info():
 
     user = User.query.filter_by(token=token).first()
     if not user:
-        return jsonify({'success': False, 'errmsg': '没有用户或者token失效'})
+        return jsonify(error_message('没有用户或者token失效')), 422
 
-    return jsonify({'success': True, 'errmsg': None, 'data': user.to_dict()})
+    return jsonify(ok_message({'data': user.to_dict()}))
 
 
 @app.route('/api/logout', methods=['POST'])
@@ -59,7 +60,7 @@ def logout():
 
     user = User.query.filter_by(token=token).first()
     if not user:
-        return jsonify({'success': False, 'errmsg': 'Token失效'})
+        return jsonify(error_message('Token失效')), 422
 
     user.token = None
-    return jsonify({'success': True, 'errmsg': None})
+    return jsonify(ok_message())
