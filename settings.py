@@ -32,6 +32,8 @@ class Settings(Config):
         'user': ResourceConfig(User),
         'role': ResourceConfig(Role),
 
+        'picture': ResourceConfig(Picture),
+
         'food_type': ResourceConfig(FoodType),
         'food': ResourceConfig(Food),
 

@@ -1,83 +1,88 @@
 <template>
   <div class="dashboard-container">
-    <panel-title title="首页图片设置" :is-line="line"></panel-title>
+    <panel-title title="首页图片设置" is-line></panel-title>
 
-    <el-row :gutter="20">
-      <el-col :xs="24" :sm="24" :lg="8">
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>首页图片</span>
-            <el-divider direction="vertical"></el-divider>
-            <span class="text-gray" style="font-size: 12px">中文</span>
-          </div>
-          <div class="text item">
-
-          </div>
-
-        </el-card>
-      </el-col>
-
-      <el-col :xs="24" :sm="24" :lg="8">
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>首页图片</span>
-            <el-divider direction="vertical"></el-divider>
-            <span class="text-gray" style="font-size: 12px">英文</span>
-          </div>
-          <div class="text item">
-
-          </div>
-
-        </el-card>
-      </el-col>
-
-      <el-col :xs="24" :sm="24" :lg="8">
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>首页图片</span>
-            <el-divider direction="vertical"></el-divider>
-            <span class="text-gray" style="font-size: 12px">德文</span>
-          </div>
-          <div class="text item">
-
-          </div>
-
-        </el-card>
-      </el-col>
+    <el-row>
+      <el-button v-waves type="primary" icon="el-icon-upload2" @click="uploadDash">上传图片</el-button>
+      <el-button type="danger" :disabled="!multipleSelection.length" icon="el-icon-delete">删除</el-button>
     </el-row>
+    <el-row>
+      <el-table v-loading="loading" :data="picture" border fit @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="55" align="center" fixed="left"></el-table-column>
+        <el-table-column prop="img_name" label="图片名称" width="120" fixed="left"></el-table-column>
+        <el-table-column prop="img_url" label="图片地址" width="150">
+          <template slot-scope="scope">
+            <span>{{scope.row.img_url}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="time" label="上传时间" width="150"></el-table-column>
+
+        <el-table-column label="操作" fixed="right">
+          <template slot-scope="scope">
+            <el-button type="text">编辑</el-button>
+            <el-button type="text">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-row>
+
+    <upload-file ref="uploadFile" @reload="getDashPicture"></upload-file>
   </div>
 </template>
 
 <script>
   import PanelTitle from '@/components/PanelTitle/PanelTitle'
+  import waves from '@/directive/waves/index'
 
+  import {mapGetters} from 'vuex'
+  import UploadFile from '@/views/common/UploadFile'
+
+  import {getPicture} from '@/api/picture'
+
+  import {getIdFormArray} from '@/utils'
 
   export default {
     name: 'Dashboard',
+    directives: {
+      waves
+    },
     components: {
-      PanelTitle
+      PanelTitle,
+      UploadFile
+    },
+    computed: {
+      ...mapGetters([
+        'language'
+      ])
     },
     data() {
       return {
-        line: false
+        picture: [],
+        multipleSelection: [],
+        loading: true
+      }
+    },
+    created() {
+      this.getDashPicture();
+    },
+    methods: {
+      async getDashPicture() {
+        const params = {
+          language: this.$store.getters.language
+        };
+        const response = await getPicture(params);
+        this.picture = response._items;
+        this.loading = false;
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = getIdFormArray(val, 'id');
+      },
+      uploadDash() {
+        this.$refs.uploadFile.showUploadFileDialog(this.picture)
       }
     }
   }
 </script>
-
-<!--<style rel="stylesheet/scss" lang="scss">-->
-<!--@import './dash.scss';-->
-
-<!--.dashboard-container {-->
-<!--background-color: #f2f2f2;-->
-<!--position: absolute;-->
-<!--width: 100%;-->
-<!--height: 100%;-->
-<!--overflow: auto;-->
-
-<!--}-->
-
-<!--</style>-->
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   .el-row {

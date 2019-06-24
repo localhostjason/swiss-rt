@@ -8,14 +8,13 @@
 
     <el-row>
       <el-col :span="15" :offset="3">
-        <!--{{fileList}}-->
         <el-upload
           ref="upload"
           :action="actionUrl"
           :headers="headers"
+          :multiple="multiple"
           :file-list="fileList"
           list-type="picture-card"
-          :data="extraData"
           :auto-upload="false"
           :on-success="handleSuccess"
           :on-error="handleError"
@@ -46,38 +45,36 @@
     data() {
       return {
         dialog: {
-          title: '上传文件',
           visible: false,
         },
+        multiple: true,
 
         fileList: [],
-        extraData: {
-          remove_id: null
-        },
+        file_id: '',
 
-        commodity_id: null,
         disabled: true,
         headers: {
           Authorization: `Bearer ${getToken()}`
         },
 
         dialogImageUrl: '',
-        dialogVisible: false
+        dialogVisible: false,
+
       }
     },
     computed: {
       actionUrl() {
-        return `${process.env.File_API}/import/img/${this.commodity_id}`
+        return `api/import/img?id=${this.file_id}`
       }
     },
     methods: {
-      showUploadFileDialog(row) {
+      showUploadFileDialog(row = [], file_id) {
         this.dialog.visible = true;
         this.$nextTick(() => {
-          this.fileList = row.imgs;
-          this.commodity_id = row.id;
+          this.fileList = row;
+          this.file_id = file_id;
 
-          this.extraData.remove_id = null;
+          this.multiple = !!file_id
         })
       },
 
@@ -87,14 +84,6 @@
       },
 
       handleRemove(file, fileList) {
-        if (file.id) {
-          this.extraData.remove_id = file.id;
-          // deleteCommodityImg(file.id).then(response => {
-          //   this.$message.success('删除成功');
-          //   this.$emit('getCommodityList');
-          // })
-        }
-
         this.fileList = fileList;
         this.disabled = !fileList.length
       },
@@ -109,17 +98,12 @@
         this.disabled = !fileList.length
       },
       handleSuccess(response, file, fileList) {
-        if (!response.success) {
-          this.$message.error(response.errmsg);
-          return
-        }
-
         this.fileList = fileList;
         this.disabled = !fileList.length;
         this.dialog.visible = false;
 
         this.$message.success('上传成功');
-        this.$emit('getCommodityList');
+        this.$emit('reload');
       },
       handleError(err, file, fileList) {
         this.$message.error(JSON.stringify(err));
