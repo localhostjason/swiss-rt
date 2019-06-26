@@ -12,7 +12,12 @@
       <el-table v-loading="loading" :data="picture" border fit @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" fixed="left"></el-table-column>
         <el-table-column prop="img_name" label="图片名称" width="120" fixed="left"></el-table-column>
-        <el-table-column prop="img_url" label="图片地址" width="150">
+        <el-table-column prop="img_url" label="图片" width="120">
+          <template slot-scope="scope">
+            <img :src="scope.row.img_url">
+          </template>
+        </el-table-column>
+        <el-table-column prop="img_url" label="图片地址" width="250">
           <template slot-scope="scope">
             <span>{{scope.row.img_url}}</span>
           </template>
