@@ -3,6 +3,10 @@ import os
 import json
 
 MY_ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
+MY_UPLOAD_DIR = os.path.join(MY_ROOT_DIR, 'static', 'upload', 'dash_img')
+
+if not os.path.exists(MY_UPLOAD_DIR):
+    os.makedirs(MY_UPLOAD_DIR)
 
 
 class ReadConfigJson(object):
@@ -45,3 +49,6 @@ class Config:
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
+
+    MY_UPLOAD_DIR = MY_UPLOAD_DIR
+    PRE_UPLOAD_PATH = '/upload'

@@ -6,3 +6,11 @@ export function getPicture(params = {}, embedded = {}, sorts = '') {
     method: 'get',
   })
 }
+
+
+export function deletePicture(id) {
+  return request({
+    url: `/picture/${id}`,
+    method: 'delete'
+  })
+}

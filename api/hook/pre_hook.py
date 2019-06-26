@@ -1,6 +1,7 @@
 import json
 from flask import current_app, abort
 from .user import UserHook
+from .picture import PictureHook
 
 
 # delete时候带的where有bug，自己添加一个才有用
@@ -59,3 +60,4 @@ class PreHook:
         app.on_pre_DELETE += pre_DELETE
 
         UserHook.init_pre(app)
+        PictureHook.init_pre(app)

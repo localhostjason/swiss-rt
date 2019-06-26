@@ -4,7 +4,9 @@
 
     <el-row>
       <el-button v-waves type="primary" icon="el-icon-upload2" @click="uploadDash">上传图片</el-button>
-      <el-button type="danger" :disabled="!multipleSelection.length" icon="el-icon-delete">删除</el-button>
+      <el-button type="danger" :disabled="!multipleSelection.length" icon="el-icon-delete"
+                 @click="deletePicture(multipleSelection)">删除
+      </el-button>
     </el-row>
     <el-row>
       <el-table v-loading="loading" :data="picture" border fit @selection-change="handleSelectionChange">
@@ -19,8 +21,8 @@
 
         <el-table-column label="操作" fixed="right">
           <template slot-scope="scope">
-            <el-button type="text">编辑</el-button>
-            <el-button type="text">删除</el-button>
+            <el-button type="text" @click="uploadDash([scope.row], scope.row.id)">编辑</el-button>
+            <el-button type="text" @click="deletePicture(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -40,6 +42,9 @@
   import {getPicture} from '@/api/picture'
 
   import {getIdFormArray} from '@/utils'
+
+  import _ from 'lodash'
+  import {deletePicture} from '@/api/picture'
 
   export default {
     name: 'Dashboard',
@@ -77,8 +82,29 @@
       handleSelectionChange(val) {
         this.multipleSelection = getIdFormArray(val, 'id');
       },
-      uploadDash() {
-        this.$refs.uploadFile.showUploadFileDialog(this.picture)
+      uploadDash(show = [], id = '') {
+        this.$refs.uploadFile.showUploadFileDialog(show, id)
+      },
+
+      deletePicture(row) {
+        const rows = _.isArray(row) ? row : [row.id];
+        if (!rows.length) {
+          this.$message.error('请选择一个图片列表');
+          return false;
+        }
+
+        this.$confirm('此操作将删除图片, 是否继续?', '提示', {
+          type: 'warning'
+        }).then(async () => {
+          this.loading = true;
+          for (const pid of rows) {
+            await deletePicture(pid);
+          }
+          this.getDashPicture();
+          this.loading = false;
+          this.$message.success('删除成功');
+
+        }).catch(() => this.loading = false);
       }
     }
   }

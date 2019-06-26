@@ -6,6 +6,7 @@
       <div class="div_title"><span>图片信息</span></div>
     </el-row>
 
+
     <el-row>
       <el-col :span="15" :offset="3">
         <el-upload
@@ -52,6 +53,8 @@
         fileList: [],
         file_id: '',
 
+        language: this.$store.getters.language,
+
         disabled: true,
         headers: {
           Authorization: `Bearer ${getToken()}`
@@ -64,7 +67,8 @@
     },
     computed: {
       actionUrl() {
-        return `api/import/img?id=${this.file_id}`
+        const api = process.env.VUE_APP_BASE_API;
+        return `${api}/import/img?id=${this.file_id}&language=${this.language}`
       }
     },
     methods: {
