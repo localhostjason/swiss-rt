@@ -3,7 +3,7 @@
     <panel-title title="首页图片设置" is-line></panel-title>
 
     <el-row>
-      <el-button v-waves type="primary" icon="el-icon-upload2" @click="uploadDash">上传图片</el-button>
+      <el-button v-waves type="primary" icon="el-icon-upload2" @click="uploadDash([], '')">上传图片</el-button>
       <el-button type="danger" :disabled="!multipleSelection.length" icon="el-icon-delete"
                  @click="deletePicture(multipleSelection)">删除
       </el-button>
@@ -82,8 +82,8 @@
       handleSelectionChange(val) {
         this.multipleSelection = getIdFormArray(val, 'id');
       },
-      uploadDash(show = [], id = '') {
-        this.$refs.uploadFile.showUploadFileDialog(show, id)
+      uploadDash(show_list, show_id) {
+        this.$refs.uploadFile.showUploadFileDialog(show_list, show_id)
       },
 
       deletePicture(row) {

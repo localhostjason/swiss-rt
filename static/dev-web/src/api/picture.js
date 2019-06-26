@@ -14,3 +14,12 @@ export function deletePicture(id) {
     method: 'delete'
   })
 }
+
+
+export function updatePicture(id, data) {
+  return request({
+    url: `/picture/${id}`,
+    method: 'patch',
+    data
+  })
+}

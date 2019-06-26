@@ -78,7 +78,7 @@
           this.fileList = row;
           this.file_id = file_id;
 
-          this.multiple = !!file_id
+          this.multiple = !file_id
         })
       },
 
@@ -98,7 +98,7 @@
 
 
       handleChange(file, fileList) {
-        this.fileList = fileList;
+        this.fileList = this.multiple ? fileList : fileList.slice(-1);
         this.disabled = !fileList.length
       },
       handleSuccess(response, file, fileList) {
