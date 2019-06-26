@@ -74,12 +74,12 @@
     methods: {
       showUploadFileDialog(row = [], file_id) {
         this.dialog.visible = true;
-        this.$nextTick(() => {
-          this.fileList = row;
-          this.file_id = file_id;
 
-          this.multiple = !file_id
-        })
+        this.fileList = row;
+        this.file_id = file_id;
+
+        this.multiple = !file_id
+
       },
 
 

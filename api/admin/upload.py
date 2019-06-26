@@ -12,7 +12,7 @@ from api.models.setting import Picture
 @requires_auth
 def import_img():
     # file id 存在 上传，否则编辑
-    file_id = request.args.get('file_id')
+    file_id = request.args.get('id')
     file_type = request.args.get('file_type', 'dash')
     language = request.args.get('language', 'zh')
 
@@ -30,6 +30,7 @@ def import_img():
         old_img = Picture.query.get_or_404(file_id)
         del_os_filename(upload_dir, old_img.img_name)
 
+        old_img.img_name = filename
         old_img.img_url = url
         old_img.img_path = path
     else:
