@@ -2,6 +2,7 @@ import axios from 'axios'
 import {Message, MessageBox} from 'element-ui'
 import store from '@/store'
 import {getToken} from '@/utils/auth'
+import router from "@/router";
 
 const defaultHeaders = {
   Accept: 'application/json, text/plain, */*; charset=utf-8',
@@ -53,20 +54,35 @@ service.interceptors.response.use(
     }
   },
   error => {
-    let resp;
+    let resp = error.response.data;
+    let message, code;
+    console.log(resp)
     try {
-      resp = error.response ? error.response.data._error.message : error;
+      message = resp._error.message;
+      code = resp._error.code;
     } catch (e) {
-      console.log(error.response.data);
-      resp = error.response ? JSON.stringify(error.response.data._issues) : error;
+      message = resp._issues;
     }
+    console.log(message, code)
 
     Message({
-      message: `错误：${resp}`,
+      message: `错误：${message}`,
       type: 'error',
       duration: 3 * 1000
     });
-    MessageBox.close();
+    try {
+      MessageBox.close();
+    } catch (e) {
+
+    }
+
+
+    if (code === 401) {
+      store.dispatch('user/fedLogOut').then(() => {
+        router.push({path: '/'})
+      });
+    }
+
     return Promise.reject(error)
   }
 );

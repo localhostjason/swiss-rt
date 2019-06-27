@@ -75,7 +75,11 @@
       showUploadFileDialog(row = [], file_id) {
         this.dialog.visible = true;
 
-        this.fileList = row;
+        this.fileList = row.map(value => {
+          this.$set(value, 'url', process.env.VUE_APP_FILE_API + value.img_url);
+          return value
+        });
+        console.log(this.fileList);
         this.file_id = file_id;
 
         this.multiple = !file_id

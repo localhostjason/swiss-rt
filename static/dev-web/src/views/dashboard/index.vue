@@ -12,9 +12,9 @@
       <el-table v-loading="loading" :data="picture" border fit @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" fixed="left"></el-table-column>
         <el-table-column prop="img_name" label="图片名称" width="120" fixed="left"></el-table-column>
-        <el-table-column prop="img_url" label="图片" width="120">
+        <el-table-column prop="img_url" label="图片" width="60">
           <template slot-scope="scope">
-            <img :src="scope.row.img_url">
+            <img :src="pre_url + scope.row.img_url" width="35px" height="25px">
           </template>
         </el-table-column>
         <el-table-column prop="img_url" label="图片地址" width="250">
@@ -69,7 +69,8 @@
       return {
         picture: [],
         multipleSelection: [],
-        loading: true
+        loading: true,
+        pre_url: process.env.VUE_APP_FILE_API,
       }
     },
     created() {
