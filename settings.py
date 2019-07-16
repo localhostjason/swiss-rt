@@ -34,6 +34,8 @@ class Settings(Config):
 
         'picture': ResourceConfig(Picture),
 
+        'order': ResourceConfig(Order),
+
         'food': ResourceConfig(Food),
 
         'room': ResourceConfig(Room),

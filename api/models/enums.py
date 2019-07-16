@@ -20,3 +20,12 @@ class PictureType(Enum):
 class FoodType(Enum):
     chives = '荤菜'
     vegetarian = '素菜'
+
+    chives_garnish = '荤类配菜'
+    vegetarian_garnish = '素类配菜'
+
+
+class OrderType(Enum):
+    completed = '已完成'
+    confirmed = '待确认'
+    cancel = '已取消'

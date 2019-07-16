@@ -63,13 +63,7 @@
         },
 
         info_id: null,
-        foodTypes: [{
-          value: 'chives',
-          label: '荤菜'
-        }, {
-          value: 'vegetarian',
-          label: '素菜'
-        }],
+        foodTypes: [],
 
         rules: {
           name: [
@@ -85,6 +79,22 @@
       }
     },
     methods: {
+      setFoodType(status) {
+        this.foodTypes = status === 'originality' ? [{
+          value: 'chives',
+          label: '荤菜'
+        }, {
+          value: 'vegetarian',
+          label: '素菜'
+        }] : [{
+          value: 'chives_garnish',
+          label: '荤类配菜'
+        }, {
+          value: 'vegetarian_garnish',
+          label: '素类配菜'
+        }];
+      },
+
       showInfoDialog(row = null) {
         this.dialog.visible = true;
         this.dialog.title = row ? '更新菜品' : '创建菜品';

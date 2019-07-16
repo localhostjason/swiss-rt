@@ -3,10 +3,24 @@
     <panel-title title="菜品管理"></panel-title>
 
 
-    <filter-table @getInfoList="getInfoList" @filterInfo="filterInfo"></filter-table>
+    <el-row>
+      <el-col :span="24">
+        <el-tabs v-model="status" type="border-card" @tab-click="handleClickTab">
 
-    <info-table :data="data" :list-loading="listLoading"
-                @getInfoList="getInfoList"></info-table>
+          <el-tab-pane v-for="item in orderType" :label="item.label" :name="item.value" :key="item.value">
+
+            <filter-table :status="status" @getInfoList="getInfoList" @filterInfo="filterInfo"></filter-table>
+
+            <info-table :data="data"
+                        :status="status"
+                        :list-loading="listLoading"
+                        @getInfoList="getInfoList"></info-table>
+          </el-tab-pane>
+
+        </el-tabs>
+      </el-col>
+    </el-row>
+
   </div>
 </template>
 
@@ -26,7 +40,14 @@
       InfoTable
     },
     data() {
+      const orderType = [
+        {value: 'originality', label: '创意菜'},
+        {value: 'surprised', label: '惊喜菜'},
+      ];
+
       return {
+        orderType,
+        status: 'originality',
         data: [],
         filter: {},
         listLoading: true
@@ -36,9 +57,21 @@
       this.getInfoList();
     },
     methods: {
+      handleClickTab(tab) {
+        this.status = tab.name;
+        this.getInfoList();
+      },
+
       async getInfoList() {
         const params = {...this.filter};
         params['language'] = this.$store.getters.language;
+
+        if (this.status === 'originality') {
+          params['type'] = ['chives', 'vegetarian']
+        } else {
+          params['type'] = ['chives_garnish', 'vegetarian_garnish']
+        }
+
         const response = await getFood(params);
         this.data = response._items;
         this.listLoading = false;

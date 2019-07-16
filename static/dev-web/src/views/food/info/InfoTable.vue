@@ -4,7 +4,9 @@
       <el-col :span="24">
         <el-table v-loading="loading" :data="data" ref="table" border fit @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="50" align="center" fixed="left"></el-table-column>
-          <el-table-column prop="name" label="名称" sortable width="130"></el-table-column>
+          <el-table-column prop="name" label="菜名称" sortable width="130"
+                           v-if="status === 'originality'"></el-table-column>
+          <el-table-column prop="name" label="配菜名称" sortable width="130" v-else></el-table-column>
           <el-table-column prop="price" label="价格" sortable width="100"></el-table-column>
           <el-table-column prop="img_url" label="图片" width="60">
             <template slot-scope="scope">
@@ -67,6 +69,10 @@
       UploadFile
     },
     props: {
+      status: {
+        type: String,
+        required: true
+      },
       data: {
         type: Array,
         required: true

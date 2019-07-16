@@ -21,10 +21,15 @@
   import waves from '@/directive/waves/index'
   import InfoDialog from './InfoDialog'
 
+  import {resetForm} from '@/utils'
+
 
   export default {
     name: "FilterTable",
-    directives: {waves},
+    directives: {
+      waves
+    },
+    props: ['status'],
     components: {
       InfoDialog
     },
@@ -34,6 +39,16 @@
           name: null,
         }
       }
+    },
+    watch: {
+      status(val) {
+        this.filter = resetForm(this.filter);
+        if (val)
+          this.$refs.infoDialog.setFoodType(val);
+      }
+    },
+    mounted() {
+      this.$refs.infoDialog.setFoodType(this.status);
     },
     methods: {
       handleFilter() {
