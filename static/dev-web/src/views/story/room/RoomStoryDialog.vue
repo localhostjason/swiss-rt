@@ -12,10 +12,14 @@
 
     <el-row>
       <el-col :span="24">
-        <markdown-editor
+       <!-- <markdown-editor
           ref="markdownEditor"
           v-model="content"
           :language="language"
+          height="300px"/>-->
+        <markdown-editor
+          ref="markdownEditor"
+          v-model="content"
           height="300px"/>
       </el-col>
     </el-row>

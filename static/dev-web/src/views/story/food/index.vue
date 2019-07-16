@@ -4,7 +4,8 @@
 
     <el-row>
       <el-col :span="24">
-        <markdown-editor ref="markdownEditor" v-model="content" :language="language" height="600px"/>
+<!--        <markdown-editor ref="markdownEditor" v-model="content" :language="language" height="600px"/>-->
+        <markdown-editor ref="markdownEditor" v-model="content" height="600px"/>
       </el-col>
     </el-row>
     <div class="top-line"></div>
