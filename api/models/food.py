@@ -14,3 +14,7 @@ class Food(db.Model):
     img_path = db.Column(db.String(32))
 
     language = db.Column(db.Enum(LanguageType), default=LanguageType.zh)
+
+    @property
+    def type_value(self):
+        return self.type.value
