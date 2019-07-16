@@ -13,11 +13,11 @@
     <el-row>
       <el-col :span="18">
         <el-form :model="form" :rules="rules" ref="form" label-width="100px">
-          <el-form-item label="房间号:" prop="number">
-            <el-input type="number" v-model.number="form.number"></el-input>
-          </el-form-item>
           <el-form-item label="名称:" prop="name">
             <el-input v-model="form.name"></el-input>
+          </el-form-item>
+          <el-form-item label="起订人数:" prop="limit_number">
+            <el-input v-model="form.limit_number"></el-input>
           </el-form-item>
         </el-form>
       </el-col>
@@ -42,15 +42,15 @@
           visible: false,
         },
         form: {
-          number: null,
+          limit_number: null,
           name: null,
         },
 
         room_id: null,
 
         rules: {
-          number: [
-            {required: true, message: '请输入房间号', trigger: 'blur'},
+          limit_number: [
+            {required: true, message: '请输入起订人数', trigger: 'blur'},
           ],
           name: [
             {required: true, message: '请输入名称', trigger: 'blur'},
@@ -61,7 +61,7 @@
     methods: {
       showRoomDialog(row = null) {
         this.dialog.visible = true;
-        this.dialog.title = row ? '更新房间' : '创建房间';
+        this.dialog.title = row ? `更新房间【${row.name}】` : '创建房间';
 
         this.$nextTick(() => {
           this.room_id = row ? row.id : null;
@@ -72,13 +72,14 @@
         this.$refs['form'].validate(async (valid) => {
           if (!valid) return false;
           const params = {...this.form};
-          if (params.number) {
-            params.number = Number(params.number)
+          if (params.limit_number) {
+            params.limit_number = Number(params.limit_number)
           }
 
           !this.room_id ?
             await createRoom(params) :
             await updateRoom(this.room_id, params);
+
           this.$message.success('更新成功');
           this.dialog.visible = false;
           this.$emit('getRoomList');

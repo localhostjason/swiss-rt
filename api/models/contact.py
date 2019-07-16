@@ -21,10 +21,15 @@ class Story(db.Model):
     type = db.Column(db.Enum(StoryType), default=StoryType.food)
     language = db.Column(db.Enum(LanguageType), default=LanguageType.zh)
 
+    room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
+    room = db.relationship('Room', backref=db.backref('story', cascade='all, delete-orphan'))
+
 
 class Room(db.Model):
-    number = db.Column(db.Integer, default=4)
     name = db.Column(db.String(68), unique=True, nullable=False, index=True)
 
-    story_id = db.Column(db.Integer, db.ForeignKey('story.id'))
-    story = db.relationship('Story', backref=db.backref('room', uselist=False, cascade='all, delete-orphan'))
+    img_name = db.Column(db.String(32))
+    img_url = db.Column(db.String(32))
+    img_path = db.Column(db.String(32))
+
+    limit_number = db.Column(db.Integer, default=4)

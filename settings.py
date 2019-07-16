@@ -45,6 +45,7 @@ class Settings(Config):
     # DOMAIN['user']['datasource']['projection']['address'] = 0
 
     DOMAIN['user']['schema']['role']['data_relation']['embeddable'] = True
+    DOMAIN['room']['schema']['story']['schema']['data_relation']['embeddable'] = True
 
     # DOMAIN['story']['item_methods'] = ['GET', 'PUT', 'PATCH']
     DOMAIN['contact']['item_methods'] = ['GET', 'PUT', 'PATCH']

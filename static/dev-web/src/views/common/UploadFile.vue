@@ -42,7 +42,7 @@
 
   export default {
     name: "UploadFile",
-    props: ['name'],
+    props: ['name', 'type'],
     data() {
       return {
         dialog: {
@@ -68,7 +68,11 @@
     computed: {
       actionUrl() {
         const api = process.env.VUE_APP_BASE_API;
-        return `${api}/import/img?id=${this.file_id}&language=${this.language}`
+        if (this.type === 'room') {
+          return `${api}/import/room/img?id=${this.file_id}&file_type=room`
+        } else {
+          return `${api}/import/img?id=${this.file_id}&language=${this.language}`
+        }
       }
     },
     methods: {
@@ -83,7 +87,6 @@
         this.file_id = file_id;
 
         this.multiple = !file_id
-
       },
 
 

@@ -5,11 +5,22 @@
         <el-table v-loading="loading" :data="data" ref="table" border fit @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="50" align="center" fixed="left"></el-table-column>
           <el-table-column prop="id" label="ID" sortable width="80"></el-table-column>
-          <el-table-column prop="number" label="房间号" sortable width="100"></el-table-column>
           <el-table-column prop="name" label="名称" sortable width="130"></el-table-column>
+          <el-table-column prop="limit_number" label="起订人数" width="130"></el-table-column>
+          <el-table-column prop="img_url" label="图片" width="60">
+            <template slot-scope="scope">
+              <img :src="pre_url + scope.row.img_url" width="35px" height="25px" v-if="scope.row.img_url">
+            </template>
+          </el-table-column>
+          <el-table-column prop="img_url" label="图片地址" width="250">
+            <template slot-scope="scope">
+              <span>{{scope.row.img_url}}</span>
+            </template>
+          </el-table-column>
 
           <el-table-column label="操作" align="right" width="">
             <template slot-scope="scope">
+              <el-button type="text" @click="uploadDash([scope.row], scope.row.id)">上次图片</el-button>
               <el-button @click="editRoomDialog(scope.row)" type="text" size="small">编 辑</el-button>
               <el-button type="text" size="small" @click="deleteRooms(scope.row)">删 除</el-button>
             </template>
@@ -32,6 +43,8 @@
 
       <room-dialog ref="roomDialog" @getRoomList="toGetRoomList"></room-dialog>
     </el-row>
+
+    <upload-file ref="uploadFile" type="room" @reload="toGetRoomList"></upload-file>
   </div>
 </template>
 
@@ -42,12 +55,15 @@
 
   import {deleteRoom} from '@/api/room'
   import RoomDialog from './RoomDialog'
+  import UploadFile from '@/views/common/UploadFile'
+
 
   export default {
     name: "RoomTable",
     components: {
       RoomDialog,
-      TableFoot
+      TableFoot,
+      UploadFile
     },
     props: {
       data: {
@@ -68,7 +84,8 @@
       return {
         loading: this.listLoading,
 
-        selectedRooms: []
+        selectedRooms: [],
+        pre_url: process.env.VUE_APP_FILE_API,
       };
     },
     methods: {
@@ -104,7 +121,11 @@
 
       toGetRoomList() {
         this.$emit('getRoomList');
-      }
+      },
+
+      uploadDash(show_list, show_id) {
+        this.$refs.uploadFile.showUploadFileDialog(show_list.filter(val => val.img_url), show_id)
+      },
     }
   }
 </script>

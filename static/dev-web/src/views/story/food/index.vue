@@ -4,8 +4,8 @@
 
     <el-row>
       <el-col :span="24">
-<!--        <markdown-editor ref="markdownEditor" v-model="content" :language="language" height="600px"/>-->
-        <markdown-editor ref="markdownEditor" v-model="content" height="600px"/>
+        <!--        <markdown-editor ref="markdownEditor" v-model="content" :language="language" height="600px"/>-->
+        <markdown-editor ref="markdownEditor" v-model="content" height="550px"/>
       </el-col>
     </el-row>
     <div class="top-line"></div>
@@ -54,7 +54,8 @@
 
       async getStory() {
         const params = {
-          type: 'food'
+          type: 'food',
+          language: this.$store.getters.language,
         };
         let response = await getStory(params);
         response = response._items;
@@ -72,9 +73,15 @@
           return false;
         }
 
+        const data = {
+          type: 'food',
+          language: this.$store.getters.language,
+          content: this.content,
+        };
+
         this.story_id ?
-          await updateStory(this.story_id, {content: this.content}) :
-          await createStory({content: this.content});
+          await updateStory(this.story_id, data) :
+          await createStory(data);
 
         this.$message.success('更新成功');
         this.getStory();
