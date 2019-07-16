@@ -3,10 +3,14 @@ import os
 import json
 
 MY_ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
-MY_UPLOAD_DIR = os.path.join(MY_ROOT_DIR, 'static', 'upload', 'dash_img')
+MY_UPLOAD_DASH_DIR = os.path.join(MY_ROOT_DIR, 'static', 'upload', 'dash')
+MY_UPLOAD_ROOM_DIR = os.path.join(MY_ROOT_DIR, 'static', 'upload', 'room')
 
-if not os.path.exists(MY_UPLOAD_DIR):
-    os.makedirs(MY_UPLOAD_DIR)
+if not os.path.exists(MY_UPLOAD_DASH_DIR):
+    os.makedirs(MY_UPLOAD_DASH_DIR)
+
+if not os.path.exists(MY_UPLOAD_ROOM_DIR):
+    os.makedirs(MY_UPLOAD_ROOM_DIR)
 
 
 class ReadConfigJson(object):
@@ -50,5 +54,6 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
 
-    MY_UPLOAD_DIR = MY_UPLOAD_DIR
+    MY_UPLOAD_DASH_DIR = MY_UPLOAD_DASH_DIR
+    MY_UPLOAD_ROOM_DIR = MY_UPLOAD_ROOM_DIR
     PRE_UPLOAD_PATH = '/upload'

@@ -12,7 +12,7 @@
         @click.middle.native="closeSelectedTag(tag)"
         @contextmenu.prevent.native="openMenu(tag,$event)"
       >
-        {{ generateTitle(tag.title) }}
+        {{ tag.title }}
         <span v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)"></span>
       </router-link>
     </scroll-pane>
@@ -29,7 +29,6 @@
 
 <script>
   import ScrollPane from './ScrollPane'
-  import {generateTitle} from '@/utils/i18n'
   import path from 'path'
 
   export default {
@@ -69,7 +68,6 @@
       this.addTags()
     },
     methods: {
-      generateTitle, // generateTitle by vue-i18n
       isActive(route) {
         return route.path === this.$route.path
       },

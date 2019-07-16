@@ -6,7 +6,7 @@
           <el-table-column type="selection" width="50" align="center" fixed="left"></el-table-column>
           <el-table-column prop="id" label="ID" sortable width="80"></el-table-column>
           <el-table-column prop="name" label="名称" sortable width="130"></el-table-column>
-          <el-table-column prop="limit_number" label="起订人数" width="130"></el-table-column>
+          <el-table-column prop="limit_number" label="起订人数" width="100"></el-table-column>
           <el-table-column prop="img_url" label="图片" width="60">
             <template slot-scope="scope">
               <img :src="pre_url + scope.row.img_url" width="35px" height="25px" v-if="scope.row.img_url">

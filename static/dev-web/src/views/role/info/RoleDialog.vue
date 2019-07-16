@@ -41,8 +41,6 @@
   import {deepClone} from '@/utils'
   import _ from 'lodash'
 
-  import i18n from '@/lang'
-
   export default {
     name: "RoleDialog",
     data() {
@@ -78,21 +76,11 @@
       }
     },
     methods: {
-      i18n(routes) {
-        return routes.map(route => {
-          // route.title = i18n.t(`route.${route.title}`);
-          if (route.children) {
-            route.children = this.i18n(route.children)
-          }
-          return route
-        })
-      },
 
       showRoleDialog(row = null) {
         this.dialog.visible = true;
         this.dialog.title = row ? `修改角色【${row.name}】` : '创建角色';
-        const routes = this.generateRoutes(deepClone([...asyncRoutes]));
-        this.routes = this.i18n(routes);
+        this.routes = this.generateRoutes(deepClone([...asyncRoutes]));
 
         this.$nextTick(() => {
           this.$refs.form.clearValidate();

@@ -22,11 +22,11 @@
         </span>
 
         <span v-if="column.attr">
-          <span v-if="generateTitle(scope.row[column.attr][column.value]) instanceof Array">
+          <span v-if="scope.row[column.attr][column.value] instanceof Array">
             <label class="label_border"
-                   v-for="val in generateTitle(scope.row[column.attr][column.value])">{{val}}</label>
+                   v-for="val in scope.row[column.attr][column.value]">{{val}}</label>
           </span>
-          <span v-else>{{generateTitle(scope.row[column.attr][column.value])}}</span>
+          <span v-else>{{scope.row[column.attr][column.value]}}</span>
 
           <!--<span v-else>{{generateTitle(scope.row[column.attr][column.value])}}</span>-->
         </span>
@@ -40,7 +40,6 @@
 
 <script>
   import treeToArray from './eval'
-  import {generateTitle} from '@/utils/i18n'
 
   export default {
     name: 'TreeTable',
@@ -88,7 +87,6 @@
       iconShow(index, record) {
         return (index === 0 && record.children && record.children.length > 0)
       },
-      generateTitle
     }
   }
 </script>
