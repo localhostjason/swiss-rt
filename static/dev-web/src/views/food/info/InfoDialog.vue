@@ -26,7 +26,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="价格:" prop="price">
+          <el-form-item label="价格:" prop="price" v-if="status === 'originality'">
             <el-input v-model="form.price"></el-input>
           </el-form-item>
           <el-form-item label="描述:" prop="desc">
@@ -46,7 +46,10 @@
   import {updateFood, createFood} from '@/api/food/info'
   import _ from 'lodash'
 
-
+  const validatePrice = (rule, value, callback) => {
+    if (!value && this.status === 'originality') callback(new Error('请输入价格'));
+    callback();
+  };
   export default {
     name: "RoomDialog",
     data() {
@@ -73,7 +76,7 @@
             {required: true, message: '请选择菜品分类', trigger: 'blur'},
           ],
           price: [
-            {required: true, message: '请选填写价格', trigger: 'blur'},
+            {validator: validatePrice, message: '请选填写价格', trigger: 'blur'},
           ],
         }
       }
@@ -95,8 +98,9 @@
         }];
       },
 
-      showInfoDialog(row = null) {
+      showInfoDialog(row = null, status) {
         this.dialog.visible = true;
+        this.setFoodType(status);
         this.dialog.title = row ? '更新菜品' : '创建菜品';
 
         this.$nextTick(() => {

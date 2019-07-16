@@ -7,13 +7,15 @@
           <el-table-column prop="name" label="菜名称" sortable width="130"
                            v-if="status === 'originality'"></el-table-column>
           <el-table-column prop="name" label="配菜名称" sortable width="130" v-else></el-table-column>
-          <el-table-column prop="price" label="价格" sortable width="100"></el-table-column>
-          <el-table-column prop="img_url" label="图片" width="60">
+          <el-table-column prop="type_value" label="类型" sortable width="130"></el-table-column>
+          <el-table-column prop="price" label="价格" sortable width="100"
+                           v-if="status === 'originality'"></el-table-column>
+          <el-table-column prop="img_url" label="图片" width="60" v-if="status === 'originality'">
             <template slot-scope="scope">
               <img :src="pre_url + scope.row.img_url" width="35px" height="25px" v-if="scope.row.img_url">
             </template>
           </el-table-column>
-          <el-table-column prop="img_url" label="图片地址" width="250">
+          <el-table-column prop="img_url" label="图片地址" width="250" v-if="status === 'originality'">
             <template slot-scope="scope">
               <span>{{scope.row.img_url}}</span>
             </template>
@@ -22,8 +24,9 @@
 
           <el-table-column label="操作" align="right" width="180">
             <template slot-scope="scope">
-              <el-button type="text" @click="uploadDash([scope.row], scope.row.id)">上次图片</el-button>
-              <el-button @click="editTypeDialog(scope.row)" type="text" size="small">编 辑</el-button>
+              <el-button type="text" @click="uploadDash([scope.row], scope.row.id)" v-if="status==='originality'">上次图片
+              </el-button>
+              <el-button @click="editTypeDialog(scope.row, status)" type="text" size="small">编 辑</el-button>
               <el-button type="text" size="small" @click="deleteRooms(scope.row)">删 除</el-button>
             </template>
           </el-table-column>
@@ -122,7 +125,7 @@
       },
 
       editTypeDialog(row) {
-        this.$refs.infoDialog.showInfoDialog(row);
+        this.$refs.infoDialog.showInfoDialog(row, status);
       },
 
       toGetInfoList() {
