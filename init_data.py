@@ -1,5 +1,4 @@
-from api.models.user import *
-from api.models.contact import *
+from api.models import *
 
 
 def insert_admin():
@@ -10,7 +9,9 @@ def insert_admin():
     db.session.commit()
 
 
-def insert_contact():
-    contact = Contact(id=1)
-    db.session.add(contact)
+def insert_room():
+    result = []
+    for v in ['西安房', '兰州房', '北京房', '乌鲁木齐房']:
+        result.append(Room(name=v))
+    db.session.add_all(result)
     db.session.commit()
