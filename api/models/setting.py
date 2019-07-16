@@ -4,14 +4,6 @@ from ..db import db
 from .enums import *
 
 
-class Setting(db.Model):
-    """
-    name: setting -> 基础设置
-    """
-    name = db.Column(db.String(68))
-    value = db.Column(db.Text)
-
-
 class Picture(db.Model):
     language = db.Column(db.Enum(LanguageType), default=LanguageType.zh)
     img_name = db.Column(db.String(32))

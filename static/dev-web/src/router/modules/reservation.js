@@ -6,7 +6,7 @@ const ReservationRouter = {
   redirect: '/reservation/complete',
   name: 'Reservation',
   meta: {
-    title: 'reservation',
+    title: '预约管理',
     icon: 'timer'
   },
   children: [
@@ -15,7 +15,7 @@ const ReservationRouter = {
       component: () => import('@/views/reservation'),
       name: 'ReservationAwait',
       meta: {
-        title: 'reservationAwait',
+        title: '已预约',
         icon: 'envelope-open'
       }
     },
@@ -24,7 +24,7 @@ const ReservationRouter = {
       component: () => import('@/views/reservation'),
       name: 'ReservationComplete',
       meta: {
-        title: 'reservationComplete',
+        title: '待确认',
         icon: 'envelope-closed'
       }
     },

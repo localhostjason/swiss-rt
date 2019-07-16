@@ -33,6 +33,8 @@ class User(db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
     role = db.relationship('Role', backref=db.backref('user'))
 
+    desc = db.Column(db.Text)
+
     @property
     def password(self):
         raise AttributeError('password not readable')

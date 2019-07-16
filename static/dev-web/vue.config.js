@@ -5,7 +5,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-// const port = 9527; // dev port
+const port = 9527; // dev port
 
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
   lintOnSave: process.env.NODE_ENV === 'development', // 是否在保存的时候检查
   productionSourceMap: false, // 生产环境是否生成 sourceMap 文件
   devServer: {
-    // port: port,
+    port: port,
     open: true,
     overlay: {
       warnings: false,

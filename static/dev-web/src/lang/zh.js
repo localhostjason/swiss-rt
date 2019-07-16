@@ -31,7 +31,6 @@ export default {
     dashboard: '概览',
     changePassword: '修改密码',
     userInfo: '个人信息',
-    switch_identity: '切换身份',
   },
   login: {
     title: '登录系统',

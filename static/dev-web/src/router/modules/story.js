@@ -6,7 +6,7 @@ const storyRouter = {
   redirect: '/story/food',
   name: 'Story',
   meta: {
-    title: 'story',
+    title: '故事管理',
     icon: 'layers'
   },
   children: [
@@ -15,7 +15,7 @@ const storyRouter = {
       component: () => import('@/views/story/food'),
       name: 'StoryFood',
       meta: {
-        title: 'storyFood',
+        title: '餐厅故事',
         icon: 'bell'
       }
     },
@@ -24,7 +24,7 @@ const storyRouter = {
       component: () => import('@/views/story/room'),
       name: 'StoryRoom',
       meta: {
-        title: 'storyRoom',
+        title: '房间故事',
         icon: 'fork'
       }
     },

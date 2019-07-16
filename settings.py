@@ -34,21 +34,17 @@ class Settings(Config):
 
         'picture': ResourceConfig(Picture),
 
-        'food_type': ResourceConfig(FoodType),
         'food': ResourceConfig(Food),
 
         'room': ResourceConfig(Room),
         'story': ResourceConfig(Story),
         'contact': ResourceConfig(Contact),
-        'setting': ResourceConfig(Setting),
 
     }).render()
     # dynamic relation cannot be json serialized , relationship backref => model name
     # DOMAIN['user']['datasource']['projection']['address'] = 0
 
     DOMAIN['user']['schema']['role']['data_relation']['embeddable'] = True
-
-    DOMAIN['food']['schema']['food_type']['data_relation']['embeddable'] = True
 
     # DOMAIN['story']['item_methods'] = ['GET', 'PUT', 'PATCH']
     DOMAIN['contact']['item_methods'] = ['GET', 'PUT', 'PATCH']

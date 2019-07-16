@@ -11,7 +11,6 @@ import userRouter from './modules/user'
 import foodRouter from './modules/food'
 import storyRouter from './modules/story'
 import RoleRouter from './modules/role'
-import SettingRouter from './modules/setting'
 import ReservationRouter from './modules/reservation'
 
 
@@ -88,7 +87,7 @@ export const asyncRoutes = [
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
         meta: {
-          title: 'dashboard',
+          title: '首页图片',
           icon: 'home',
           noCache: true,
           affix: true
@@ -108,7 +107,7 @@ export const asyncRoutes = [
         component: () => import('@/views/room/index'),
         name: 'RoomInfo',
         meta: {
-          title: 'roomInfo',
+          title: '房间管理',
           icon: 'print',
         }
       }
@@ -127,13 +126,12 @@ export const asyncRoutes = [
         component: () => import('@/views/contact/index'),
         name: 'ContactUs',
         meta: {
-          title: 'contact',
+          title: '联系我们',
           icon: 'headphones',
         }
       }
     ]
   },
-  SettingRouter,
   RoleRouter,
   {
     path: '*',

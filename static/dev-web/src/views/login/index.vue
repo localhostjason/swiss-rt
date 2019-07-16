@@ -6,21 +6,21 @@
         <h3 class="title">
           <span>瑞士餐厅后台</span>
           <span class="text-explode">|</span>
-          <span>{{ $t('login.title') }}</span>
+          <span>登录系统</span>
         </h3>
         <lang-select class="set-language"/>
       </div>
 
       <el-form-item prop="username">
         <span class="svg-container"><svg-icon icon-class="user"/></span>
-        <el-input v-model="loginForm.username" :autofocus="isAutoFocus" :placeholder="$t('login.username')"
+        <el-input v-model="loginForm.username" :autofocus="isAutoFocus" placeholder="请输入用户名"
                   name="username" type="text"
                   auto-complete="on" size="medium"></el-input>
       </el-form-item>
 
       <el-form-item prop="password">
         <span class="svg-container"><svg-icon icon-class="password"/></span>
-        <el-input :type="passwordType" v-model="loginForm.password" :placeholder="$t('login.password')" name="password"
+        <el-input :type="passwordType" v-model="loginForm.password" placeholder="请输入密码" name="password"
                   auto-complete="on" @keyup.enter.native="handleLogin" size="medium"></el-input>
         <span class="show-pwd" @click="showPwd">
           <svg-icon icon-class="eye"/>
@@ -28,7 +28,7 @@
       </el-form-item>
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
-                 @click.native.prevent="handleLogin" size="medium">{{ $t('login.logIn') }}
+                 @click.native.prevent="handleLogin" size="medium">登录
       </el-button>
     </el-form>
   </div>
@@ -37,14 +37,13 @@
 
 <script>
   import LangSelect from '@/components/LangSelect'
-  import {trans} from '@/utils/i18n'
 
   const validateUsername = (rule, value, callback) => {
-    let error = new Error(trans('login', 'validate_username'));
+    let error = new Error('请输入用户名');
     !value ? callback(error) : callback();
   };
   const validatePassword = (rule, value, callback) => {
-    if (!value) callback(new Error(trans('login', 'validate_password')));
+    if (!value) callback(new Error('请输入密码'));
     callback();
   };
 

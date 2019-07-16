@@ -13,11 +13,11 @@ def register():
     password = req_data.get('password')
 
     if not phone or not password:
-        return jsonify(error_message('用户名或者密码不能为空')), 422
+        return jsonify(error_message('用户名或者密码不能为空')), 421
 
     old_user = User.query.filter_by(phone=phone).first()
     if old_user:
-        return jsonify(error_message('用户名已存在')), 422
+        return jsonify(error_message('用户名已存在')), 421
 
     user = User(phone=phone, password=password)
     db.session.add(user)
@@ -38,7 +38,7 @@ def login():
         user.update_time_ip()
         return jsonify(ok_message({'token': token}))
 
-    return jsonify(error_message('用户名或者密码错误')), 422
+    return jsonify(error_message('用户名或者密码错误')), 421
 
 
 @app.route('/api/user_info', methods=['get'])
@@ -47,7 +47,7 @@ def get_user_info():
 
     user = User.query.filter_by(token=token).first()
     if not user:
-        return jsonify(error_message('没有用户或者token失效')), 422
+        return jsonify(error_message('没有用户或者token失效')), 421
 
     return jsonify(ok_message({'data': user.to_dict()}))
 
@@ -60,7 +60,7 @@ def logout():
 
     user = User.query.filter_by(token=token).first()
     if not user:
-        return jsonify(error_message('Token失效')), 422
+        return jsonify(error_message('Token失效')), 421
 
     user.token = None
     return jsonify(ok_message())

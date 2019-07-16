@@ -6,7 +6,7 @@ const roleRouter = {
   redirect: '/role/info',
   name: 'Role',
   meta: {
-    title: 'roleManage',
+    title: '权限管理',
     icon: 'shield',
   },
   children: [
@@ -15,7 +15,7 @@ const roleRouter = {
       component: () => import('@/views/role/info'),
       name: 'RoleInfo',
       meta: {
-        title: 'roles',
+        title: '角色管理',
         icon: 'list',
       }
     },
@@ -24,7 +24,7 @@ const roleRouter = {
       component: () => import('@/views/role/users'),
       name: 'RoleUsers',
       meta: {
-        title: 'users',
+        title: '账号管理',
         icon: 'key'
       }
     }

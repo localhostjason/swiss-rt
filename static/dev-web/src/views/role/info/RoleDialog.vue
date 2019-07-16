@@ -80,7 +80,7 @@
     methods: {
       i18n(routes) {
         return routes.map(route => {
-          route.title = i18n.t(`route.${route.title}`);
+          // route.title = i18n.t(`route.${route.title}`);
           if (route.children) {
             route.children = this.i18n(route.children)
           }
