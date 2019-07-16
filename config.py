@@ -5,12 +5,16 @@ import json
 MY_ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
 MY_UPLOAD_DASH_DIR = os.path.join(MY_ROOT_DIR, 'static', 'upload', 'dash')
 MY_UPLOAD_ROOM_DIR = os.path.join(MY_ROOT_DIR, 'static', 'upload', 'room')
+MY_UPLOAD_FOOD_DIR = os.path.join(MY_ROOT_DIR, 'static', 'upload', 'food')
 
 if not os.path.exists(MY_UPLOAD_DASH_DIR):
     os.makedirs(MY_UPLOAD_DASH_DIR)
 
 if not os.path.exists(MY_UPLOAD_ROOM_DIR):
     os.makedirs(MY_UPLOAD_ROOM_DIR)
+
+if not os.path.exists(MY_UPLOAD_FOOD_DIR):
+    os.makedirs(MY_UPLOAD_FOOD_DIR)
 
 
 class ReadConfigJson(object):
@@ -56,4 +60,5 @@ class Config:
 
     MY_UPLOAD_DASH_DIR = MY_UPLOAD_DASH_DIR
     MY_UPLOAD_ROOM_DIR = MY_UPLOAD_ROOM_DIR
+    MY_UPLOAD_FOOD_DIR = MY_UPLOAD_FOOD_DIR
     PRE_UPLOAD_PATH = '/upload'

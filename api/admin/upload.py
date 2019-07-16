@@ -77,3 +77,36 @@ def import_room_img():
 
     file.save(path)
     return jsonify(ok_message())
+
+
+@app.route('/api/import/food/img', methods=['POST'])
+@requires_auth
+def import_food_img():
+    food_id = request.args.get('id')
+    file_type = request.args.get('file_type', 'food')
+
+    upload_dir = app.config['MY_UPLOAD_FOOD_DIR']
+
+    if not food_id:
+        return jsonify(error_message('菜品iD不存在')), 421
+
+    file = request.files['file']
+    if not file or not allowed_file(file.filename):
+        return jsonify(error_message('文件不存在，或者文件格式不对')), 421
+    filename = secure_filename(file.filename) if not check_contain_chinese(file.filename) else file.filename
+
+    path = os.path.join(upload_dir, filename)
+    url = '{}/{}/{}'.format(app.config['PRE_UPLOAD_PATH'], file_type, filename)
+
+    old_food = Food.query.filter_by(id=food_id).first()
+    if not old_food:
+        return jsonify(error_message('菜品iD不存在')), 421
+
+    del_os_filename(upload_dir, old_food.img_name)
+
+    old_food.img_name = filename
+    old_food.img_url = url
+    old_food.img_path = path
+
+    file.save(path)
+    return jsonify(ok_message())
