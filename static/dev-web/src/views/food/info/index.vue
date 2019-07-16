@@ -1,6 +1,6 @@
 <template>
   <div>
-    <panel-title title="菜品分类"></panel-title>
+    <panel-title title="菜品管理"></panel-title>
 
 
     <filter-table @getInfoList="getInfoList" @filterInfo="filterInfo"></filter-table>

@@ -16,15 +16,18 @@
           <el-form-item label="名称:" prop="name">
             <el-input v-model="form.name"></el-input>
           </el-form-item>
-          <el-form-item label="类型:" prop="food_type">
-            <el-select v-model="form.food_type" placeholder="请选择">
+          <el-form-item label="类型:" prop="type">
+            <el-select v-model="form.type" placeholder="请选择">
               <el-option
                 v-for="item in foodTypes"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
               </el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="价格:" prop="price">
+            <el-input v-model="form.price"></el-input>
           </el-form-item>
           <el-form-item label="描述:" prop="desc">
             <el-input type="textarea" :autosize="{ minRows: 4}" v-model="form.desc"></el-input>
@@ -43,7 +46,6 @@
   import {updateFood, createFood} from '@/api/food/info'
   import _ from 'lodash'
 
-  import {getFoodType} from '@/api/food/type'
 
   export default {
     name: "RoomDialog",
@@ -56,18 +58,28 @@
         form: {
           name: null,
           desc: null,
-          food_type: null,
+          type: null,
+          price: null,
         },
 
         info_id: null,
-        foodTypes: [],
+        foodTypes: [{
+          value: 'chives',
+          label: '荤菜'
+        }, {
+          value: 'vegetarian',
+          label: '素菜'
+        }],
 
         rules: {
           name: [
             {required: true, message: '请输入名称', trigger: 'blur'},
           ],
-          food_type: [
+          type: [
             {required: true, message: '请选择菜品分类', trigger: 'blur'},
+          ],
+          price: [
+            {required: true, message: '请选填写价格', trigger: 'blur'},
           ],
         }
       }
@@ -81,18 +93,14 @@
           this.info_id = row ? row.id : null;
           this.form = _.pick(row, Object.keys(this.form));
 
-          this.getFoodTypeList()
         })
-      },
-      async getFoodTypeList() {
-        const response = await getFoodType();
-        this.foodTypes = response._items;
       },
 
       updateFoodInfo() {
         this.$refs['form'].validate(async (valid) => {
           if (!valid) return false;
           const params = {...this.form};
+          params['price'] = Number(params['price']);
 
           !this.info_id ?
             await createFood(params) :
