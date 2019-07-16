@@ -12,11 +12,11 @@
 
     <el-row>
       <el-col :span="24">
-       <!-- <markdown-editor
-          ref="markdownEditor"
-          v-model="content"
-          :language="language"
-          height="300px"/>-->
+        <!-- <markdown-editor
+           ref="markdownEditor"
+           v-model="content"
+           :language="language"
+           height="300px"/>-->
         <markdown-editor
           ref="markdownEditor"
           v-model="content"
@@ -66,12 +66,12 @@
       showStoryDialog(row) {
         this.dialog.visible = true;
         this.room_id = row.id;
-        this.story_id = row.story;
+        this.story_id = row.story_lan.length ? row.story_lan[0].id : null;
 
-        this.dialog.title = row.story ? `更新房间【${row.number}】故事` : `创建房间【${row.number}】故事`;
+        this.dialog.title = row.story ? `更新房间【${row.name}】故事` : `创建房间【${row.name}】故事`;
 
         this.$nextTick(() => {
-          if (row.story) this.getStoryInfo(row.story);
+          if (this.story_id) this.getStoryInfo(this.story_id);
         })
       },
       async getStoryInfo(id) {
@@ -84,11 +84,17 @@
           return false;
         }
 
+        const params = {
+          content: this.content,
+          language: this.$store.getters.language,
+          room: this.room_id,
+          type: 'room',
+        };
+
         if (this.story_id) {
-          await updateStory(this.story_id, {content: this.content})
+          await updateStory(this.story_id, params)
         } else {
-          const response = await createStory({content: this.content});
-          await updateRoom(this.room_id, {story: response.id})
+          await createStory(params);
         }
         this.$message.success('更新成功');
         this.$emit('getRoomList');

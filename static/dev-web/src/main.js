@@ -20,7 +20,7 @@ import * as filters from './filters'
 
 Vue.use(Element, {
   size: 'small',
-  i18n: (key, value) => i18n.t(key, value)
+  // i18n: (key, value) => i18n.t(key, value)
 });
 
 Object.keys(filters).forEach(key => {

@@ -19,7 +19,7 @@ export function getProvince() {
 export function getCity(provinceCode) {
   console.log("省：" + provinceCode);
   if (!provinceCode) {
-    provinceCode = '11'
+    provinceCode = null
   }
   let cityArr = [];
   cities.forEach(function (item) {
@@ -38,7 +38,7 @@ export function getCity(provinceCode) {
 export function getArea(cityCode) {
   console.log("市：" + cityCode);
   if (!cityCode) {
-    cityCode = '1101'
+    cityCode = null
   }
   let areaArr = [];
   areas.forEach(function (item) {

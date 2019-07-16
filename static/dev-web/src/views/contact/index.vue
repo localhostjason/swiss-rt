@@ -72,7 +72,7 @@
   import PanelTitle from '@/components/PanelTitle/PanelTitle'
   import {getProvince, getArea, getCity} from '@/vendor/address'
 
-  import {getContact, updateContact} from '@/api/contact'
+  import {getContact, updateContact, createContact} from '@/api/contact'
   import _ from 'lodash'
 
   export default {
@@ -87,6 +87,7 @@
         area: getArea(),
 
         form: {
+          language: this.$store.getters.language,
           province: null,
           city: null,
           area: null,
@@ -96,6 +97,8 @@
           fax: null,
           email: null,
         },
+        cid: null,
+
         rules: {
           province: [
             {required: true, message: '请输入省份', trigger: 'blur'},
@@ -146,15 +149,26 @@
       },
 
       async getContactInfo() {
-        const response = await getContact(1);
-        this.form = _.pick(response, Object.keys(this.form))
+        const params = {
+          language: this.$store.getters.language,
+        };
+        const response = await getContact(params);
+        if (!response._items.length) return false;
+        const data = response._items[0];
+        this.cid = data.id;
+        this.form = _.pick(data, Object.keys(this.form))
       },
       saveContact() {
         this.$refs['form'].validate(async (valid) => {
           if (!valid) return false;
 
-          console.log(this.form);
-          await updateContact(1, this.form);
+          if (this.cid) {
+            await updateContact(this.cid, this.form)
+          } else {
+            await createContact(this.form);
+          }
+
+          await this.getContactInfo();
           this.$message.success('更新成功')
         });
       }

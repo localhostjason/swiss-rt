@@ -1,9 +1,15 @@
 import request from '@/utils/request'
 
-
-export function getContact(uid) {
+export function getContact(params = {}) {
   return request({
-    url: `/contact/${uid}`,
+    url: `/contact?where=${JSON.stringify(params)}`,
+    method: 'get',
+  })
+}
+
+export function getContactInfo(id) {
+  return request({
+    url: `/contact/${id}`,
     method: 'get',
   })
 }
@@ -13,6 +19,14 @@ export function updateContact(id, data) {
   return request({
     url: `/contact/${id}`,
     method: 'patch',
+    data
+  })
+}
+
+export function createContact(data) {
+  return request({
+    url: `/contact`,
+    method: 'post',
     data
   })
 }

@@ -10,19 +10,20 @@
           <el-table-column prop="name" label="名称" sortable width="130"></el-table-column>
           <el-table-column prop="story" sortable label="房间故事">
             <template slot-scope="scope">
-              <el-tag v-if="scope.row.story">有故事</el-tag>
+              <el-tag v-if="scope.row.story_lan.length">有故事</el-tag>
               <el-tag v-else type="warning">无故事</el-tag>
             </template>
           </el-table-column>
           <el-table-column label="操作" align="right" width="150">
             <template slot-scope="scope">
               <el-button @click="editRoomStoryDialog(scope.row)" type="text" size="small">
-                <span v-if="scope.row.story">编辑故事</span>
+                <span v-if="scope.row.story_lan.length">编辑故事</span>
                 <span v-else>创建故事</span>
               </el-button>
               <el-button type="text" size="small" @click="deleteStoryInfo(scope.row)"
-                         :disabled="!scope.row.story"
-              >删除故事</el-button>
+                         :disabled="!scope.row.story_lan.length"
+              >删除故事
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -47,7 +48,6 @@
 </template>
 
 <script>
-  import {getIdFormArray} from '@/utils'
   import TableFoot from '@/components/Table/Foot'
 
   import RoomStoryDialog from './RoomStoryDialog'
@@ -87,7 +87,14 @@
         this.$refs.tableFoot.selectionChange(val);
       },
       setSelection(val) {
-        this.selectedRomStory = getIdFormArray(val, 'id');
+        let result = [];
+        if (val && val.length) {
+          for (const v of val) {
+            if (v['story_lan'].length)
+              result.push(v['story_lan'][0]['id'])
+          }
+        }
+        this.selectedRomStory = result
       },
 
       editRoomStoryDialog(row) {
@@ -99,18 +106,21 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(async () => {
-          const data = _.isArray(row) ? row : [row.id];
+
+          const data = _.isArray(row) ? row : [row.story_lan[0]['id']];
 
           this.loading = true;
-          for (const story_id of data) {
-            await deleteStory(story_id)
+          try {
+            for (const story_id of data) {
+              await deleteStory(story_id)
+            }
+            this.loading = false;
+            this.$message.success('删除成功');
+            this.$emit('getRoomList')
+          } catch (e) {
+            this.loading = false;
           }
-          this.loading = false;
-          this.$message.success('删除成功');
-          this.$emit('getRoomList')
-
-        }).catch(() => {
-        });
+        }).catch(() => console.log('no delete'));
       },
       toGetRoomList() {
         this.$emit('getRoomList')

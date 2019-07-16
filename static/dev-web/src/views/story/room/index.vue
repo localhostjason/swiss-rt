@@ -40,8 +40,14 @@
     },
     methods: {
       async getRoomList() {
-        const response = await getRoom(this.filter);
-        this.room = response._items;
+        const embedded = {
+          story: true
+        };
+        const response = await getRoom(this.filter, embedded);
+        this.room = response._items.map(v => {
+          this.$set(v, 'story_lan', v.story.filter(val => val.language === this.$store.getters.language));
+          return v;
+        });
         this.listLoading = false;
 
       },

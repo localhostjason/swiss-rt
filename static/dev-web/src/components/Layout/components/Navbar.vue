@@ -7,7 +7,7 @@
       <breadcrumb id="breadcrumb-container" class="breadcrumb-container"></breadcrumb>
 
       <div class="pull-left">
-        <span class="text-gray" style="margin-left: 50px;font-size: 12px">当前语言版本：</span>
+        <span class="text-warning" style="margin-left: 50px;font-size: 12px">当前语言版本：</span>
         <el-tag style="font-size: 14px">{{language_type[language]}}</el-tag>
         <lang-select class="international right-menu-item hover-effect" style="margin-left: 5px"></lang-select>
       </div>
