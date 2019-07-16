@@ -37,7 +37,9 @@
     },
     methods: {
       async getInfoList() {
-        const response = await getFood(this.filter);
+        const params = {...this.filter};
+        params['language'] = this.$store.getters.language;
+        const response = await getFood(params);
         this.data = response._items;
         this.listLoading = false;
       },

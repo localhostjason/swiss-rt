@@ -40,7 +40,9 @@
     methods: {
       async getRoomList() {
         const sorts = '-id';
-        const response = await getRoom(this.filter, {}, sorts);
+        const params = {...this.filter};
+        params['language'] = this.$store.getters.language;
+        const response = await getRoom(params, {}, sorts);
         this.rooms = response._items;
         this.listLoading = false;
       },

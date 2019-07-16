@@ -75,6 +75,7 @@
           if (params.limit_number) {
             params.limit_number = Number(params.limit_number)
           }
+          params['language'] = this.$store.getters.language;
 
           !this.room_id ?
             await createRoom(params) :

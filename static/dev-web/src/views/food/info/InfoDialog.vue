@@ -101,6 +101,7 @@
           if (!valid) return false;
           const params = {...this.form};
           params['price'] = Number(params['price']);
+          params['language'] = this.$store.getters.language;
 
           !this.info_id ?
             await createFood(params) :

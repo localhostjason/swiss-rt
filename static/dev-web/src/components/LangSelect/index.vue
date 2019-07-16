@@ -20,7 +20,6 @@
     },
     methods: {
       handleSetLanguage(lang) {
-        this.$i18n.locale = lang;
         this.$store.dispatch('app/setLanguage', lang);
         this.$message.success('切换语言版本成功');
         location.reload();
