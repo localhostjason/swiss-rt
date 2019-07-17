@@ -69,6 +69,7 @@
       handleClickTab(tab) {
         this.status = tab.name;
         this.filter.argsQuery = {};
+        this.filter.pageQuery.page = 1;
         this.getInfoList();
       },
 
