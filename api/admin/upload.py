@@ -110,3 +110,36 @@ def import_food_img():
 
     file.save(path)
     return jsonify(ok_message())
+
+
+@app.route('/api/import/news/img', methods=['POST'])
+@requires_auth
+def import_news_img():
+    news_id = request.args.get('id')
+    file_type = request.args.get('file_type', 'news')
+
+    upload_dir = app.config['MY_UPLOAD_NEWS_DIR']
+
+    if not news_id:
+        return jsonify(error_message('新闻资讯iD不存在')), 421
+
+    file = request.files['file']
+    if not file or not allowed_file(file.filename):
+        return jsonify(error_message('文件不存在，或者文件格式不对')), 421
+    filename = secure_filename(file.filename) if not check_contain_chinese(file.filename) else file.filename
+
+    path = os.path.join(upload_dir, filename)
+    url = '{}/{}/{}'.format(app.config['PRE_UPLOAD_PATH'], file_type, filename)
+
+    old_news = News.query.filter_by(id=news_id).first()
+    if not old_news:
+        return jsonify(error_message('新闻资讯iD不存在')), 421
+
+    del_os_filename(upload_dir, old_news.img_name)
+
+    old_news.img_name = filename
+    old_news.img_url = url
+    old_news.img_path = path
+
+    file.save(path)
+    return jsonify(ok_message())
