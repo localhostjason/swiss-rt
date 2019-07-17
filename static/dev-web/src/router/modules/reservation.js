@@ -11,8 +11,8 @@ const ReservationRouter = {
   },
   children: [
     {
-      path: 'await',
-      component: () => import('@/views/reservation'),
+      path: 'complete',
+      component: () => import('@/views/reservation/complete'),
       name: 'ReservationAwait',
       meta: {
         title: '已预约',
@@ -20,8 +20,8 @@ const ReservationRouter = {
       }
     },
     {
-      path: 'complete',
-      component: () => import('@/views/reservation'),
+      path: 'confirm',
+      component: () => import('@/views/reservation/confirm'),
       name: 'ReservationComplete',
       meta: {
         title: '待确认',
