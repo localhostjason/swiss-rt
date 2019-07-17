@@ -68,6 +68,8 @@
         info_id: null,
         foodTypes: [],
 
+        status: null,
+
         rules: {
           name: [
             {required: true, message: '请输入名称', trigger: 'blur'},
@@ -83,6 +85,8 @@
     },
     methods: {
       setFoodType(status) {
+        this.status = status;
+
         this.foodTypes = status === 'originality' ? [{
           value: 'chives',
           label: '荤菜'

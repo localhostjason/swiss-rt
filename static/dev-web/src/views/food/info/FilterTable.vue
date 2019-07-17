@@ -42,9 +42,7 @@
     },
     watch: {
       status(val) {
-        this.filter = resetForm(this.filter);
-        if (val)
-          this.$refs.infoDialog.setFoodType(val);
+        this.$refs.infoDialog.setFoodType(val);
       }
     },
     mounted() {
@@ -62,7 +60,7 @@
         this.$emit('filterInfo', result)
       },
       createInfo() {
-        this.$refs.infoDialog.showInfoDialog();
+        this.$refs.infoDialog.showInfoDialog(null, this.status);
       },
       toGetInfoList() {
         this.$emit('getInfoList')

@@ -1,11 +1,11 @@
 import request from '@/utils/request'
 
 
-export function getFood(params= {}, embedded = {}, sorts = '') {
+export function getFood({argsQuery = {}, pageQuery = {}} = {}, embedded = {}, sorts = '') {
   return request({
-    url: `/food?where=${JSON.stringify(params)}&embedded=${JSON.stringify(embedded)}&sort=${sorts}`,
+    url: `/food?where=${JSON.stringify(argsQuery)}&embedded=${JSON.stringify(embedded)}&sort=${sorts}`,
     method: 'get',
-    // params: pageQuery
+    params: pageQuery
   })
 }
 

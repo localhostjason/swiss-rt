@@ -14,6 +14,8 @@
             <info-table :data="data"
                         :status="status"
                         :list-loading="listLoading"
+                        :page-query="filter.pageQuery"
+                        :total="total"
                         @getInfoList="getInfoList"></info-table>
           </el-tab-pane>
 
@@ -49,7 +51,14 @@
         orderType,
         status: 'originality',
         data: [],
-        filter: {},
+        total:0,
+        filter: {
+          argsQuery: {},
+          pageQuery: {
+            page: 1,
+            max_results: 10
+          },
+        },
         listLoading: true
       }
     },
@@ -59,26 +68,29 @@
     methods: {
       handleClickTab(tab) {
         this.status = tab.name;
+        this.filter.argsQuery = {};
         this.getInfoList();
       },
 
       async getInfoList() {
         const params = {...this.filter};
-        params['language'] = this.$store.getters.language;
+        params.argsQuery['language'] = this.$store.getters.language;
 
         if (this.status === 'originality') {
-          params['type'] = ['chives', 'vegetarian']
+          params.argsQuery['type'] = ['chives', 'vegetarian']
         } else {
-          params['type'] = ['chives_garnish', 'vegetarian_garnish']
+          params.argsQuery['type'] = ['chives_garnish', 'vegetarian_garnish']
         }
 
         const response = await getFood(params);
         this.data = response._items;
+        this.total = response._meta.total;
         this.listLoading = false;
       },
 
       filterInfo(params) {
-        this.filter = {...params};
+        this.filter.argsQuery = params;
+        this.filter.pageQuery.page = 1;
         this.getInfoList();
       }
     }

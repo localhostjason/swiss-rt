@@ -45,6 +45,11 @@
           </template>
         </table-foot>
       </el-col>
+      <el-col :span="24" style="margin-top: 10px">
+        <el-pagination :current-page="pageQuery.page" :page-sizes="[10,20,30, 40]" :page-size="pageQuery.max_results"
+                       :total="total" background layout="total, sizes, prev, pager, next, jumper"
+                       @size-change="changeSize" @current-change="changePage"></el-pagination>
+      </el-col>
 
       <info-dialog ref="infoDialog" @getInfoList="toGetInfoList"></info-dialog>
     </el-row>
@@ -83,7 +88,15 @@
       listLoading: {
         type: Boolean,
         default: true
-      }
+      },
+      pageQuery: {
+        type: Object,
+        required: true,
+        default: () => {}
+      },
+      total: {
+        required: true
+      },
     },
     watch: {
       listLoading(val) {
@@ -99,6 +112,15 @@
       };
     },
     methods: {
+      changeSize(params_limit) {
+        this.pageQuery.max_results = params_limit;
+        this.$emit('getInfoList')
+      },
+      changePage(params_page) {
+        this.pageQuery.page = params_page;
+        this.$emit('getInfoList')
+      },
+
       handleSelectionChange(val) {
         this.$refs.tableFoot.selectionChange(val);
       },

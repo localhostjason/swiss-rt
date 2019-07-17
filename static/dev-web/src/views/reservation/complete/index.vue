@@ -56,7 +56,7 @@
       },
       filterOrders(args) {
         this.listQuery.argsQuery = args;
-        this.listQuery.pageQuery = 1;
+        this.listQuery.pageQuery.page = 1;
         this.getOrderList();
       }
     }
