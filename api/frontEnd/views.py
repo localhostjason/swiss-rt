@@ -92,10 +92,11 @@ def create_order():
     if not data.get('email'):
         return jsonify(error_message('请填写电子邮件')), 421
 
-    old_order = Order.query.filter_by(phone=data['phone'], is_complete=False).first()
+    old_order = Order.query.filter_by(phone=data['phone'], is_completed=False).first()
     if old_order:
         return jsonify(error_message('你刚刚已预约过了')), 421
 
     order_info = Order(**data)
     db.session.add(order_info)
-    return jsonify(ok_message())
+    db.session.flush()
+    return jsonify(ok_message({'data': order_info.to_dict()}))
