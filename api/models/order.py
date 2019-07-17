@@ -14,10 +14,11 @@ class Order(db.Model):
     phone = db.Column(db.String(32), nullable=False)
     email = db.Column(db.String(32), nullable=False)
 
-    type = db.Column(db.Enum(OrderType), default=OrderType.confirmed)
+    is_completed = db.Column(db.Boolean, default=False)
 
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     room = db.relationship('Room', backref=db.backref('order', cascade='all, delete-orphan'))
 
-    food = db.relationship('Food', secondary=relation_order_food, lazy='subquery',
-                           backref=db.backref('order', lazy='subquery'))
+    # 暂时 去掉 选菜 环节
+    # food = db.relationship('Food', secondary=relation_order_food, lazy='subquery',
+    #                        backref=db.backref('order', lazy='subquery'))
