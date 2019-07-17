@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="dialog.title" :visible.sync="dialog.visible" width="40%" :close-on-press-escape="false"
+  <el-dialog :title="dialog.title" :visible.sync="dialog.visible" :close-on-press-escape="false"
              :close-on-click-modal="false">
 
     <el-row style="margin-bottom: 20px; margin-top: -8px">
@@ -21,6 +21,9 @@
               value-format="yyyy-MM-dd"
               :picker-options="pickerOptions">
             </el-date-picker>
+          </el-form-item>
+          <el-form-item label="简单描述:" prop="desc">
+            <el-input type="textarea" v-model="form.desc" :autosize="{ minRows: 5}"></el-input>
           </el-form-item>
         </el-form>
       </el-col>
@@ -51,7 +54,8 @@
         form: {
           time: null,
           title: null,
-          language: this.$store.getters.language
+          language: this.$store.getters.language,
+          desc: null
         },
 
         formRules: {

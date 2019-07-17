@@ -136,8 +136,8 @@
           const data = _.isArray(row) ? row : [row.id];
 
           this.loading = true;
-          for (const room_id of data) {
-            await deleteFoodInfo(room_id)
+          for (const food_id of data) {
+            await deleteFoodInfo(food_id)
           }
           this.loading = false;
           this.$message.success('删除成功');

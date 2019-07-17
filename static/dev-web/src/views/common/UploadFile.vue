@@ -72,6 +72,8 @@
           return `${api}/import/room/img?id=${this.file_id}&file_type=room`
         } else if (this.type === 'food') {
           return `${api}/import/food/img?id=${this.file_id}&file_type=food`
+        } else if (this.type === 'news') {
+          return `${api}/import/news/img?id=${this.file_id}&file_type=news`
         } else {
           return `${api}/import/img?id=${this.file_id}&language=${this.language}`
         }
