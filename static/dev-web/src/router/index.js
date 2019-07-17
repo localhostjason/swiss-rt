@@ -12,6 +12,7 @@ import foodRouter from './modules/food'
 import storyRouter from './modules/story'
 import RoleRouter from './modules/role'
 import ReservationRouter from './modules/reservation'
+import NewsRouter from './modules/news'
 
 
 /**
@@ -115,6 +116,7 @@ export const asyncRoutes = [
   },
   foodRouter,
   storyRouter,
+  NewsRouter,
   {
     path: '/contact',
     component: Layout,

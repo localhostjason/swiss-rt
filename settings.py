@@ -42,6 +42,8 @@ class Settings(Config):
         'story': ResourceConfig(Story),
         'contact': ResourceConfig(Contact),
 
+        'news': ResourceConfig(News),
+
     }).render()
     # dynamic relation cannot be json serialized , relationship backref => model name
     # DOMAIN['user']['datasource']['projection']['address'] = 0
