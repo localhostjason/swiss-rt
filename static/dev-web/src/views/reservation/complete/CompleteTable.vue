@@ -4,12 +4,6 @@
       <el-table v-loading="loading" :data="data" border fit ref="table" @selection-change="selectionChange">
         <el-table-column type="selection" width="55" align="center"></el-table-column>
         <el-table-column prop="room.name" label="房间" width="150"></el-table-column>
-        <el-table-column label="是否已通知" width="120">
-          <template slot-scope="scope">
-            <el-tag v-if="scope.row.is_notice" type="success">已通知</el-tag>
-            <el-tag v-else type="warning">未通知</el-tag>
-          </template>
-        </el-table-column>
         <el-table-column prop="number" label="用餐人数" width="80"></el-table-column>
         <el-table-column prop="budget" label="人均预算" width="120"></el-table-column>
         <el-table-column prop="dinner_time" label="用餐时间" width="150"></el-table-column>
@@ -18,21 +12,6 @@
 
         <el-table-column label="操作" align="right" width="150">
           <template slot-scope="scope">
-            <el-popover
-              placement="top"
-              width="160"
-              v-if="!scope.row.is_notice"
-              v-model="scope.row.visible">
-              <p>确定已通知吗？</p>
-              <div style="text-align: right; margin: 0">
-                <el-button size="mini" type="text" @click="scope.row.visible = false">取消</el-button>
-                <el-button type="primary" size="mini" @click="updateOrder(scope.row)">确定</el-button>
-              </div>
-              <el-button slot="reference" type="text">已通知</el-button>
-            </el-popover>
-
-            <span class="text-explode" v-if="!scope.row.is_notice">|</span>
-
             <el-button type="text" size="small" @click="deleteOrder(scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -63,7 +42,7 @@
   import TableFoot from '@/components/Table/Foot'
   import {getIdFormArray} from '@/utils'
   import {dateFormat} from '@/filters'
-  import {deleteOrder, updateOrder} from '@/api/order'
+  import {deleteOrder} from '@/api/order'
 
   import _ from 'lodash'
 
@@ -138,13 +117,6 @@
           }
 
         }).catch(() => console.log('no delete'));
-      },
-
-
-      async updateOrder(row) {
-        await updateOrder(row.id, {is_notice: true});
-        this.$message.success('更新成功');
-        this.$emit('getOrderList');
       },
     }
   }

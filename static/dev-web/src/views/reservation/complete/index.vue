@@ -1,6 +1,6 @@
 <template>
   <div>
-    <panel-title title="待确认" is-line></panel-title>
+    <panel-title title="已预约" is-line></panel-title>
 
     <complete-filter @filterOrders="filterOrders"></complete-filter>
 
