@@ -3,8 +3,11 @@ from .enums import *
 
 
 class News(db.Model):
-    name = db.Column(db.String(64), index=True)
+    title = db.Column(db.String(64), index=True)
+    time = db.Column(db.String(32))
+
     desc = db.Column(db.Text)
+
     detail = db.Column(db.Text)
 
     img_name = db.Column(db.String(32))
