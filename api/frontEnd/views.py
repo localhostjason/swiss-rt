@@ -69,3 +69,29 @@ def story():
 
     story_list = story_query.all()
     return jsonify(ok_message({'data': [v.to_dict() for v in story_list]}))
+
+
+@app.route('/api/order/create', methods=['POST'])
+def create_order():
+    data = request.get_json()
+    if not data.get('room_id'):
+        return jsonify(error_message('请填写房间号')), 421
+
+    if not data.get('number'):
+        return jsonify(error_message('请填写用餐人数')), 421
+
+    if not data.get('budget'):
+        return jsonify(error_message('请填写人均预算')), 421
+
+    if not data.get('dinner_time'):
+        return jsonify(error_message('请填写用餐时间')), 421
+
+    if not data.get('phone'):
+        return jsonify(error_message('请填写手机号')), 421
+
+    if not data.get('email'):
+        return jsonify(error_message('请填写电子邮件')), 421
+
+    order_info = Order(**data)
+    db.session.add(order_info)
+    return jsonify(ok_message())
