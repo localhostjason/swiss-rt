@@ -71,6 +71,18 @@ def story():
     return jsonify(ok_message({'data': [v.to_dict() for v in story_list]}))
 
 
+@app.route('/api/news/info')
+def news():
+    language = request.args.get('language')
+
+    news_query = News.query
+    if language:
+        news_query = news_query.filter_by(language=language)
+
+    news_list = news_query.all()
+    return jsonify(ok_message({'data': [v.to_dict() for v in news_list]}))
+
+
 @app.route('/api/order/create', methods=['POST'])
 def create_order():
     data = request.get_json()
