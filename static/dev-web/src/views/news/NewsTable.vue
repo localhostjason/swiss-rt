@@ -21,10 +21,12 @@
             <el-tag v-else type="warning">无</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="phone" label="资讯详情" width="100">
+        <el-table-column prop="phone" label="资讯详情" width="120">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.detail">有</el-tag>
             <el-tag v-else type="warning">无</el-tag>
+            <span class="text-explode">|</span>
+            <span class="span-color" @click="updateDetail(scope.row)">更新</span>
           </template>
         </el-table-column>
 
@@ -60,6 +62,7 @@
 
     <upload-file ref="uploadFile" type="news" @reload="toGetNewsList"></upload-file>
 
+    <create-news-detail-dialog ref="detail_dialog" @getNewsList="toGetNewsList"></create-news-detail-dialog>
   </el-row>
 </template>
 
@@ -70,6 +73,7 @@
   import {deleteNewsInfo} from '@/api/news'
 
   import UploadFile from '@/views/common/UploadFile'
+  import CreateNewsDetailDialog from './CreateNewsDetailDialog'
 
 
   import _ from 'lodash'
@@ -82,6 +86,7 @@
     components: {
       TableFoot,
       CreateNewsDialog,
+      CreateNewsDetailDialog,
       UploadFile,
     },
     filters: {
@@ -167,6 +172,11 @@
       uploadDash(show_list, show_id) {
         this.$refs.uploadFile.showUploadFileDialog(show_list.filter(val => val.img_url), show_id)
       },
+
+      updateDetail(row) {
+        this.$refs.detail_dialog.showNewsDetailDialog(row)
+
+      }
     }
   }
 </script>
