@@ -11,8 +11,6 @@ class Picture(db.Model):
     img_path = db.Column(db.String(32))
     time = db.Column(db.DateTime, default=datetime.now)
 
-    type = db.Column(db.Enum(PictureType), default=PictureType.dash)
-
 
 @db.event.listens_for(Picture, 'before_insert')
 def pre_time(mapper, connection, target):

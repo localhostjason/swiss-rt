@@ -12,11 +12,6 @@ class LanguageType(Enum):
     gm = '德语'
 
 
-class PictureType(Enum):
-    dash = '首页'
-    food = '食品'
-
-
 class FoodType(Enum):
     chives = '荤菜'
     vegetarian = '素菜'

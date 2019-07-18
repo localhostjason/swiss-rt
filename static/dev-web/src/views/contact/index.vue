@@ -82,9 +82,9 @@
     },
     data() {
       return {
-        province: getProvince(),
-        city: getCity(),
-        area: getArea(),
+        province: [],
+        city: [],
+        area: [],
 
         form: {
           language: this.$store.getters.language,
@@ -152,11 +152,22 @@
         const params = {
           language: this.$store.getters.language,
         };
+        this.province = getProvince();
+
         const response = await getContact(params);
-        if (!response._items.length) return false;
+        if (!response._items.length) {
+          this.city = getCity();
+          this.area = getArea();
+          return false
+        }
+
         const data = response._items[0];
         this.cid = data.id;
-        this.form = _.pick(data, Object.keys(this.form))
+        this.form = _.pick(data, Object.keys(this.form));
+
+
+        this.city = getCity(this.form.province);
+        this.area = getArea(this.form.city);
       },
       saveContact() {
         this.$refs['form'].validate(async (valid) => {

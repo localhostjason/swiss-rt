@@ -68,7 +68,15 @@ def story():
         story_query = story_query.filter_by(type=story_type)
 
     story_list = story_query.all()
-    return jsonify(ok_message({'data': [v.to_dict() for v in story_list]}))
+
+    result = []
+    if story_list:
+        for v in story_list:
+            info = v.to_dict()
+            info['room_name'] = v.room.name if v.room else None
+            result.append(info)
+
+    return jsonify(ok_message({'data': result}))
 
 
 @app.route('/api/news/info')

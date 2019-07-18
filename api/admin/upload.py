@@ -37,8 +37,7 @@ def import_img():
         img = Picture(img_name=filename,
                       language=language,
                       img_url=url,
-                      img_path=path,
-                      type=file_type)
+                      img_path=path)
         db.session.add(img)
 
     file.save(path)
