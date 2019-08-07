@@ -36,10 +36,10 @@ class ServerCommand(Command):
             os.kill(pid, 0)
             return True
         except ProcessLookupError as e:
-            print(e)
+            # print(e)
             return False
         except Exception as e:
-            print(e)
+            # print(e)
             return True
 
 
