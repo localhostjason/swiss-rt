@@ -4,4 +4,4 @@ from .. import app
 
 @app.route('/')
 def index():
-    return redirect('/index.html')
+    return redirect('/admin/index.html')
