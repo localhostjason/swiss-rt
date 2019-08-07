@@ -25,7 +25,7 @@ class ServerCommand(Command):
             with open(pid_file, 'r') as f:
                 return int(f.read())
         except Exception as e:
-            print(e)
+            # print(e)
             return None
 
     def get_status(self):
