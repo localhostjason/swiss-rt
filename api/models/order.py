@@ -8,8 +8,8 @@ class Order(db.Model):
     budget = db.Column(db.Float, nullable=False)
     dinner_time = db.Column(db.String, nullable=False)
 
-    avoid_food = db.Column(db.String(128))
-    other_avoid_food = db.Column(db.String(255))
+    avoid_food = db.Column(db.String(128))  # 设定为忌口
+    other_avoid_food = db.Column(db.String(255))  # todo 暂时用不到
 
     phone = db.Column(db.String(32), nullable=False)
     email = db.Column(db.String(32), nullable=False)

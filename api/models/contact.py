@@ -36,3 +36,8 @@ class Room(db.Model):
     limit_number = db.Column(db.Integer, default=4)
 
     language = db.Column(db.Enum(LanguageType), default=LanguageType.zh)
+
+    @property
+    def can_book(self):
+        no_completed_order = [v.id for v in self.order if not v.is_completed]
+        return not no_completed_order

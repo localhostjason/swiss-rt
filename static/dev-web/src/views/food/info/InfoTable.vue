@@ -10,6 +10,15 @@
           <el-table-column prop="type_value" label="类型" sortable width="130"></el-table-column>
           <el-table-column prop="price" label="价格" sortable width="100"
                            v-if="status === 'originality'"></el-table-column>
+          <el-table-column prop="price_unit" label="价格单位" width="100"
+                           v-if="status === 'originality'"></el-table-column>
+          <el-table-column prop="is_show_dash" label="显示首页" width="100"
+                           v-if="status === 'originality'">
+            <template slot-scope="scope">
+              <el-tag type="success" v-if="scope.row.is_show_dash">显示</el-tag>
+              <el-tag v-else>不显示</el-tag>
+            </template>
+          </el-table-column>
           <el-table-column prop="img_url" label="图片" width="60" v-if="status === 'originality'">
             <template slot-scope="scope">
               <img :src="pre_url + scope.row.img_url" width="35px" height="25px" v-if="scope.row.img_url">
@@ -146,7 +155,7 @@
         }).catch(() => this.loading = false);
       },
 
-      editTypeDialog(row) {
+      editTypeDialog(row, status) {
         this.$refs.infoDialog.showInfoDialog(row, status);
       },
 

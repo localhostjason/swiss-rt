@@ -7,6 +7,11 @@ class Food(db.Model):
     desc = db.Column(db.String(128))
     price = db.Column(db.Float)
 
+    # 商品单位
+    price_unit = db.Column(db.String(64))
+
+    is_show_dash = db.Column(db.Boolean, default=False)
+
     type = db.Column(db.Enum(FoodType), default=FoodType.chives)
 
     img_name = db.Column(db.String(32))

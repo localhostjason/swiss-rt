@@ -45,6 +45,18 @@ def food():
     return jsonify(ok_message({'data': [v.to_dict() for v in foods]}))
 
 
+@app.route('/api/foods/dash')
+def food_dash():
+    language = request.args.get('language')
+
+    food_query = Food.query.filter(Food.type.in_(['chives', 'vegetarian']), Food.is_show_dash.is_(True))
+    if language:
+        food_query = food_query.filter_by(language=language)
+
+    foods = food_query.all()
+    return jsonify(ok_message({'data': [v.to_dict() for v in foods]}))
+
+
 @app.route('/api/contact/info')
 def contact():
     language = request.args.get('language')
@@ -74,6 +86,9 @@ def story():
         for v in story_list:
             info = v.to_dict()
             info['room_name'] = v.room.name if v.room else None
+            info['_type'] = v.type.name
+            if v.type.name == 'room':
+                info['can_book'] = v.room.can_book if v.room else False
             result.append(info)
 
     return jsonify(ok_message({'data': result}))
@@ -115,6 +130,10 @@ def create_order():
     old_order = Order.query.filter_by(phone=data['phone'], is_completed=False).first()
     if old_order:
         return jsonify(error_message('你刚刚已预约过了')), 421
+
+    room_ = Room.query.filter_by(id=data['room_id']).first()
+    if room_ and not room_.can_book:
+        return jsonify(error_message('房间已经被预定了')), 421
 
     order_info = Order(**data)
     db.session.add(order_info)
