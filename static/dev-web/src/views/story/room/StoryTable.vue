@@ -14,8 +14,23 @@
               <el-tag v-else type="warning">无故事</el-tag>
             </template>
           </el-table-column>
-          <el-table-column label="操作" align="right" width="150">
+          <el-table-column prop="img_url" label="图片" width="60">
+            <template slot-scope="scope" v-if="scope.row.story_lan.length">
+              <img :src="pre_url + scope.row.story_lan[0].img_url" width="35px" height="25px">
+            </template>
+          </el-table-column>
+          <el-table-column prop="img_url" label="图片地址">
+            <template slot-scope="scope" v-if="scope.row.story_lan.length">
+              <span>{{scope.row.story_lan[0].img_url}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" align="right" width="200">
             <template slot-scope="scope">
+              <el-button type="text"
+                         @click="uploadDash(scope.row.story_lan, scope.row.story_lan.length ? scope.row.story_lan[0].id : 0)"
+                         :disabled="!scope.row.story_lan.length">上次图片
+              </el-button>
+
               <el-button @click="editRoomStoryDialog(scope.row)" type="text" size="small">
                 <span v-if="scope.row.story_lan.length">编辑故事</span>
                 <span v-else>创建故事</span>
@@ -44,11 +59,16 @@
     </el-row>
 
     <room-story-dialog ref="storyDialog" @getRoomList="toGetRoomList"></room-story-dialog>
+
+    <upload-file ref="uploadFile" type="story" @reload="toGetRoomList"></upload-file>
   </div>
 </template>
 
 <script>
   import TableFoot from '@/components/Table/Foot'
+
+  import UploadFile from '@/views/common/UploadFile'
+
 
   import RoomStoryDialog from './RoomStoryDialog'
   import _ from 'lodash'
@@ -58,7 +78,8 @@
     name: "StoryTableFilter",
     components: {
       RoomStoryDialog,
-      TableFoot
+      TableFoot,
+      UploadFile
     },
     props: {
       data: {
@@ -79,7 +100,9 @@
       return {
         loading: this.listLoading,
 
-        selectedRomStory: []
+        selectedRomStory: [],
+
+        pre_url: process.env.VUE_APP_FILE_API,
       };
     },
     methods: {
@@ -121,6 +144,9 @@
             this.loading = false;
           }
         }).catch(() => console.log('no delete'));
+      },
+      uploadDash(show_list, show_id) {
+        this.$refs.uploadFile.showUploadFileDialog(show_list.filter(val => val.img_url), show_id)
       },
       toGetRoomList() {
         this.$emit('getRoomList')

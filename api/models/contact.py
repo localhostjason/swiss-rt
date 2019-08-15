@@ -25,6 +25,10 @@ class Story(db.Model):
 
     language = db.Column(db.Enum(LanguageType), default=LanguageType.zh)
 
+    img_name = db.Column(db.String(32))
+    img_url = db.Column(db.String(32))
+    img_path = db.Column(db.String(32))
+
 
 class Room(db.Model):
     name = db.Column(db.String(68), unique=True, nullable=False, index=True)
