@@ -6,7 +6,7 @@
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item :disabled="language==='zh'" command="zh">中文</el-dropdown-item>
       <el-dropdown-item :disabled="language==='en'" command="en">英文</el-dropdown-item>
-      <el-dropdown-item :disabled="language==='gm'" command="en">德文</el-dropdown-item>
+      <el-dropdown-item :disabled="language==='gm'" command="gm">德文</el-dropdown-item>
     </el-dropdown-menu>
   </el-dropdown>
 </template>
