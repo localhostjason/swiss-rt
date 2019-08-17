@@ -31,7 +31,7 @@ class Story(db.Model):
 
 
 class Room(db.Model):
-    name = db.Column(db.String(68), unique=True, nullable=False, index=True)
+    name = db.Column(db.String(68), nullable=False, index=True)
 
     img_name = db.Column(db.String(32))
     img_url = db.Column(db.String(32))

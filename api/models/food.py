@@ -3,7 +3,7 @@ from .enums import *
 
 
 class Food(db.Model):
-    name = db.Column(db.String(64), unique=True, index=True)
+    name = db.Column(db.String(64), index=True)
     desc = db.Column(db.String(128))
     price = db.Column(db.Float)
 
