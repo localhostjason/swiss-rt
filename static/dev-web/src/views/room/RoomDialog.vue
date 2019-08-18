@@ -19,6 +19,13 @@
           <el-form-item label="起订人数:" prop="limit_number">
             <el-input v-model="form.limit_number"></el-input>
           </el-form-item>
+          <el-form-item label="简介:" prop="limit_number">
+            <el-input
+              type="textarea"
+              :autosize="{ minRows: 5}"
+              placeholder="请输入简介"
+              v-model="form.desc"></el-input>
+          </el-form-item>
         </el-form>
       </el-col>
     </el-row>
@@ -44,6 +51,7 @@
         form: {
           limit_number: null,
           name: null,
+          desc: null,
         },
 
         room_id: null,

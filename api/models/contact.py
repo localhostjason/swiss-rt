@@ -31,6 +31,8 @@ class Story(db.Model):
 class Room(db.Model):
     name = db.Column(db.String(68), nullable=False, index=True)
 
+    desc = db.Column(db.Text)
+
     img_name = db.Column(db.String(32))
     img_url = db.Column(db.String(32))
     img_path = db.Column(db.String(32))
