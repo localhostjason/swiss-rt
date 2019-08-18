@@ -1,7 +1,8 @@
-from flask import jsonify
 from .. import app
 from api.models import *
 from .message import *
+
+from flask import jsonify, request
 
 
 @app.route('/api/dash')
@@ -34,7 +35,7 @@ def room():
 @app.route('/api/foods')
 def food():
     language = request.args.get('language')
-    types = request.args.getlist('type', [])
+    types = [v for v in request.args.getlist('type') if v]
     food_query = Food.query
     if language:
         food_query = food_query.filter_by(language=language)

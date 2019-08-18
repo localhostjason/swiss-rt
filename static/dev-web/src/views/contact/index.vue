@@ -8,37 +8,13 @@
           <h5 style="margin-bottom: 15px">基本信息</h5>
 
           <el-form :model="form" :rules="rules" ref="form" label-width="100px">
-            <el-form-item label="省份:" prop="province">
-              <el-select v-model="form.province" @change="changeProvince">
-                <el-option
-                  v-for="item in province"
-                  :key="item.code"
-                  :label="item.name"
-                  :value="item.code">
-                </el-option>
-              </el-select>
+            <el-form-item label="国家:" prop="country">
+              <el-input v-model="form.country"></el-input>
             </el-form-item>
             <el-form-item label="城市:" prop="city">
-              <el-select v-model="form.city" @change="changeCity">
-                <el-option
-                  v-for="item in city"
-                  :key="item.code"
-                  :label="item.name"
-                  :value="item.code">
-                </el-option>
-              </el-select>
+              <el-input v-model="form.city"></el-input>
             </el-form-item>
-            <el-form-item label="区县:" prop="area">
-              <el-select v-model="form.area">
-                <el-option
-                  v-for="item in area"
-                  :key="item.code"
-                  :label="item.name"
-                  :value="item.code">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="详细地址:" prop="address">
+            <el-form-item label="街道:" prop="address">
               <el-input v-model="form.address"></el-input>
             </el-form-item>
 
@@ -48,13 +24,9 @@
             <el-form-item label="邮编:" prop="zip">
               <el-input v-model="form.zip"></el-input>
             </el-form-item>
-            <el-form-item label="传真:" prop="fax">
-              <el-input v-model="form.fax"></el-input>
-            </el-form-item>
             <el-form-item label="邮箱:" prop="email">
               <el-input v-model="form.email"></el-input>
             </el-form-item>
-
 
             <el-form-item>
               <el-button type="primary" @click="saveContact">保 存</el-button>
@@ -70,7 +42,6 @@
 
 <script>
   import PanelTitle from '@/components/PanelTitle/PanelTitle'
-  import {getProvince, getArea, getCity} from '@/vendor/address'
 
   import {getContact, updateContact, createContact} from '@/api/contact'
   import _ from 'lodash'
@@ -82,47 +53,34 @@
     },
     data() {
       return {
-        province: [],
-        city: [],
-        area: [],
-
         form: {
-          language: this.$store.getters.language,
-          province: null,
+          country: null,
           city: null,
-          area: null,
           address: null,
           phone: null,
           zip: null,
-          fax: null,
           email: null,
         },
         cid: null,
 
         rules: {
-          province: [
-            {required: true, message: '请输入省份', trigger: 'blur'},
+          country: [
+            {required: true, message: '请输入国家', trigger: 'blur'},
           ],
           city: [
             {required: true, message: '请输入城市', trigger: 'blur'},
           ],
-          area: [
-            {required: true, message: '请输入区域', trigger: 'blur'},
-          ],
           address: [
-            {required: true, message: '请输入详细地址', trigger: ['blur', 'change']},
+            {required: true, message: '请输入详细地址', trigger: 'blur'},
           ],
           phone: [
-            {required: true, message: '请输入电话号码', trigger: ['blur', 'change']},
+            {required: true, message: '请输入电话号码', trigger: 'blur'},
           ],
           zip: [
-            {required: true, message: '请输入邮编', trigger: ['blur', 'change']},
-          ],
-          fax: [
-            {required: true, message: '请输入传真号码', trigger: ['blur', 'change']},
+            {required: true, message: '请输入邮编', trigger: 'blur'},
           ],
           email: [
-            {required: true, message: '请输入邮箱', trigger: ['blur', 'change']},
+            {required: true, message: '请输入邮箱', trigger: 'blur'},
           ]
         }
       }
@@ -131,43 +89,19 @@
       this.getContactInfo()
     },
     methods: {
-      changeProvince(code) {
-        console.log(getCity(code));
-        this.form.city = null;
-        this.form.area = null;
-        this.city = getCity(code);
-
-        this.form.city = this.city[0].code;
-
-        this.area = getArea(this.form.city);
-        this.form.area = this.area[0].code
-      },
-      changeCity(code) {
-        this.form.area = null;
-        this.area = getArea(code);
-        this.form.area = this.area[0].code
-      },
-
       async getContactInfo() {
         const params = {
           language: this.$store.getters.language,
         };
-        this.province = getProvince();
-
         const response = await getContact(params);
-        if (!response._items.length) {
-          this.city = getCity();
-          this.area = getArea();
+        if (response._items.length) {
+          const data = response._items[0];
+          this.cid = data.id;
+          this.form = _.pick(data, Object.keys(this.form));
           return false
         }
+        this.cid = null;
 
-        const data = response._items[0];
-        this.cid = data.id;
-        this.form = _.pick(data, Object.keys(this.form));
-
-
-        this.city = getCity(this.form.province);
-        this.area = getArea(this.form.city);
       },
       saveContact() {
         this.$refs['form'].validate(async (valid) => {
