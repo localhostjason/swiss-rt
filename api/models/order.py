@@ -15,6 +15,7 @@ class Order(db.Model):
     email = db.Column(db.String(32), nullable=False)
 
     is_completed = db.Column(db.Boolean, default=False)
+    is_noticed = db.Column(db.Boolean, default=False)
 
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     room = db.relationship('Room', backref=db.backref('order', cascade='all, delete-orphan'))
