@@ -10,19 +10,39 @@
         <el-table-column prop="phone" label="手机号" width="120"></el-table-column>
         <el-table-column prop="email" label="邮箱"></el-table-column>
         <el-table-column prop="avoid_food" label="忌口"></el-table-column>
+        <el-table-column prop="is_noticed" label="通知" width="100">
+          <template slot-scope="scope">
+            <el-tag type="warning" v-if="!scope.row.is_noticed">未通知</el-tag>
+            <el-tag type="success" v-else>已通知</el-tag>
+          </template>
+        </el-table-column>
 
-        <el-table-column label="操作" align="right" width="150">
+        <el-table-column label="操作" align="right" width="180">
           <template slot-scope="scope">
             <el-popover
               placement="top"
               width="160"
               v-model="scope.row.visible">
-              <p>确定吗？</p>
+              <p>完吗？</p>
               <div style="text-align: right; margin: 0">
                 <el-button size="mini" type="text" @click="scope.row.visible = false">取消</el-button>
                 <el-button type="primary" size="mini" @click="updateOrder(scope.row)">确定</el-button>
               </div>
-              <el-button slot="reference" type="text">确认</el-button>
+              <el-button slot="reference" type="text">完成</el-button>
+            </el-popover>
+
+            <span class="text-explode">|</span>
+
+            <el-popover
+              placement="top"
+              width="160"
+              v-model="scope.row.visible2">
+              <p>通知吗？</p>
+              <div style="text-align: right; margin: 0">
+                <el-button size="mini" type="text" @click="scope.row.visible2 = false">取消</el-button>
+                <el-button type="primary" size="mini" @click="updateOrderNotice(scope.row)">确定</el-button>
+              </div>
+              <el-button slot="reference" type="text" :disabled="scope.row.is_noticed">通知</el-button>
             </el-popover>
 
             <span class="text-explode">|</span>
@@ -137,6 +157,12 @@
 
       async updateOrder(row) {
         await updateOrder(row.id, {is_completed: true});
+        this.$message.success('更新成功');
+        this.$emit('getOrderList');
+      },
+
+      async updateOrderNotice(row) {
+        await updateOrder(row.id, {is_noticed: true});
         this.$message.success('更新成功');
         this.$emit('getOrderList');
       },

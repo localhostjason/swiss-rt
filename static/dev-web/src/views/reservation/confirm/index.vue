@@ -1,6 +1,6 @@
 <template>
   <div>
-    <panel-title title="待确认" is-line></panel-title>
+    <panel-title title="预约信息" is-line></panel-title>
 
     <confirm-filter @filterOrders="filterOrders"></confirm-filter>
 
@@ -51,6 +51,7 @@
         const response = await getOrder(params, {room: true});
         this.data = response._items.map(val => {
           this.$set(val, 'visible', false);
+          this.$set(val, 'visible2', false);
           return val
         });
         this.total = response._meta.total;
