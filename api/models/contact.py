@@ -44,12 +44,14 @@ class Room(db.Model):
 
     language = db.Column(db.Enum(LanguageType), default=LanguageType.zh)
 
-    @property
-    def can_book(self):
-        now = datetime.now().strftime('%Y-%m-%d')
-        order = Order.query.filter(
-            Order.is_completed.is_(False),
-            func.strftime("%Y-%m-%d", Order.dinner_time) == now
-        ).first()
-        no_order = [v for v in order.room if v.id == self.id] if order else []
-        return not no_order
+    can_book = db.Column(db.Boolean, default=True)
+
+    # @property
+    # def can_book(self):
+    #     now = datetime.now().strftime('%Y-%m-%d')
+    #     order = Order.query.filter(
+    #         Order.is_completed.is_(False),
+    #         func.strftime("%Y-%m-%d", Order.dinner_time) == now
+    #     ).first()
+    #     no_order = [v for v in order.room if v.id == self.id] if order else []
+    #     return not no_order
