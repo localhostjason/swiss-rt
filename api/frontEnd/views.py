@@ -3,6 +3,16 @@ from api.models import *
 from .message import *
 
 from flask import jsonify, request
+from datetime import datetime
+
+
+def check_time(time_):
+    r = True
+    try:
+        datetime.strptime(time_, '%Y-%m-%d %H:%M:%S')
+    except ValueError:
+        r = False
+    return r
 
 
 @app.route('/api/dash')
@@ -121,6 +131,9 @@ def create_order():
 
     if not data.get('dinner_time'):
         return jsonify(error_message('请填写用餐时间')), 421
+
+    if not check_time(data['dinner_time']):
+        return jsonify(error_message('用餐时间格式不对')), 421
 
     if not data.get('phone'):
         return jsonify(error_message('请填写手机号')), 421
