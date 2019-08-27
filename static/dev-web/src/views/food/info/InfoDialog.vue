@@ -146,7 +146,7 @@
           if (!valid) return false;
           const params = {...this.form};
           params['price'] = Number(params['price']);
-          if (!params['price']) {
+          if (this.status === 'originality' && !params['price']) {
             this.$message.error('价格请填写数字');
             return false
           }

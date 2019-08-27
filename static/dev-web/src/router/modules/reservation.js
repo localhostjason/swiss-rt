@@ -15,7 +15,7 @@ const ReservationRouter = {
       component: () => import('@/views/reservation/complete'),
       name: 'ReservationAwait',
       meta: {
-        title: '已预约',
+        title: '已完成',
         icon: 'envelope-open'
       }
     },
@@ -24,7 +24,7 @@ const ReservationRouter = {
       component: () => import('@/views/reservation/confirm'),
       name: 'ReservationComplete',
       meta: {
-        title: '待确认',
+        title: '预约信息',
         icon: 'envelope-closed'
       }
     },

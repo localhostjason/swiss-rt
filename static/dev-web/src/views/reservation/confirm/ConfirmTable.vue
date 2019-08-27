@@ -3,26 +3,59 @@
     <el-col :span="24">
       <el-table v-loading="loading" :data="data" border fit ref="table" @selection-change="selectionChange">
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="room.name" label="房间" width="150"></el-table-column>
+        <el-table-column prop="room" label="房间" width="150">
+          <template slot-scope="scope">
+            <el-tag v-for="item in scope.row.room" :key="item.name" class="mr-5">{{item.name}}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column prop="number" label="用餐人数" width="80"></el-table-column>
         <el-table-column prop="budget" label="人均预算" width="120"></el-table-column>
         <el-table-column prop="dinner_time" label="用餐时间" width="150"></el-table-column>
         <el-table-column prop="phone" label="手机号" width="120"></el-table-column>
         <el-table-column prop="email" label="邮箱"></el-table-column>
         <el-table-column prop="avoid_food" label="忌口"></el-table-column>
+        <el-table-column prop="spicy" label="辣度">
+          <template slot-scope="scope">
+            <span v-if="scope.row.spicy">
+              <span v-if="scope.row.spicy === 'low'">微辣</span>
+              <span v-else-if="scope.row.spicy === 'normal'">中辣</span>
+              <span v-else>非常辣</span>
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="is_noticed" label="通知" width="100">
+          <template slot-scope="scope">
+            <el-tag type="warning" v-if="!scope.row.is_noticed">未通知</el-tag>
+            <el-tag type="success" v-else>已通知</el-tag>
+          </template>
+        </el-table-column>
 
-        <el-table-column label="操作" align="right" width="150">
+        <el-table-column label="操作" align="right" width="180">
           <template slot-scope="scope">
             <el-popover
               placement="top"
               width="160"
               v-model="scope.row.visible">
-              <p>确定吗？</p>
+              <p>完吗？</p>
               <div style="text-align: right; margin: 0">
                 <el-button size="mini" type="text" @click="scope.row.visible = false">取消</el-button>
                 <el-button type="primary" size="mini" @click="updateOrder(scope.row)">确定</el-button>
               </div>
-              <el-button slot="reference" type="text">确认</el-button>
+              <el-button slot="reference" type="text">完成</el-button>
+            </el-popover>
+
+            <span class="text-explode">|</span>
+
+            <el-popover
+              placement="top"
+              width="160"
+              v-model="scope.row.visible2">
+              <p>通知吗？</p>
+              <div style="text-align: right; margin: 0">
+                <el-button size="mini" type="text" @click="scope.row.visible2 = false">取消</el-button>
+                <el-button type="primary" size="mini" @click="updateOrderNotice(scope.row)">确定</el-button>
+              </div>
+              <el-button slot="reference" type="text" :disabled="scope.row.is_noticed">通知</el-button>
             </el-popover>
 
             <span class="text-explode">|</span>
@@ -137,6 +170,12 @@
 
       async updateOrder(row) {
         await updateOrder(row.id, {is_completed: true});
+        this.$message.success('更新成功');
+        this.$emit('getOrderList');
+      },
+
+      async updateOrderNotice(row) {
+        await updateOrder(row.id, {is_noticed: true});
         this.$message.success('更新成功');
         this.$emit('getOrderList');
       },

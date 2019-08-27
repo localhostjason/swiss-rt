@@ -33,37 +33,19 @@ service.interceptors.request.use(
   }
 );
 
-// respone interceptor
+// response interceptor
 service.interceptors.response.use(
-  // todo mock js response
-  // response => response.data,
+  response => response.data,
 
-  response => {
-    const res = response.data;
-
-    if (res.errcode) {
-      Message({
-        message: `错误：${res.errmsg}`,
-        type: 'error',
-        duration: 5 * 1000
-      });
-
-      return Promise.reject(res.errmsg)
-    } else {
-      return response.data
-    }
-  },
   error => {
     let resp = error.response.data;
     let message, code;
-    console.log(resp)
     try {
       message = resp._error.message;
       code = resp._error.code;
     } catch (e) {
-      message = resp._issues;
+      message = '提交参数类型不对';
     }
-    console.log(message, code)
 
     Message({
       message: `错误：${message}`,
@@ -75,7 +57,6 @@ service.interceptors.response.use(
     } catch (e) {
 
     }
-
 
     if (code === 401) {
       store.dispatch('user/fedLogOut').then(() => {
