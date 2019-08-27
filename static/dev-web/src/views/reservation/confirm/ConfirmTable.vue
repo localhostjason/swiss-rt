@@ -14,6 +14,15 @@
         <el-table-column prop="phone" label="手机号" width="120"></el-table-column>
         <el-table-column prop="email" label="邮箱"></el-table-column>
         <el-table-column prop="avoid_food" label="忌口"></el-table-column>
+        <el-table-column prop="spicy" label="辣度">
+          <template slot-scope="scope">
+            <span v-if="scope.row.spicy">
+              <span v-if="scope.row.spicy === 'low'">微辣</span>
+              <span v-else-if="scope.row.spicy === 'normal'">中辣</span>
+              <span v-else>非常辣</span>
+            </span>
+          </template>
+        </el-table-column>
         <el-table-column prop="is_noticed" label="通知" width="100">
           <template slot-scope="scope">
             <el-tag type="warning" v-if="!scope.row.is_noticed">未通知</el-tag>
