@@ -111,7 +111,7 @@ def news():
 def create_order():
     data = request.get_json()
     if not data.get('room_id'):
-        return jsonify(error_message('请填写房间号')), 421
+        return jsonify(error_message('请选择房间号')), 421
 
     if not data.get('number'):
         return jsonify(error_message('请填写用餐人数')), 421
@@ -128,15 +128,22 @@ def create_order():
     if not data.get('email'):
         return jsonify(error_message('请填写电子邮件')), 421
 
-    old_order = Order.query.filter_by(phone=data['phone'], is_completed=False).first()
+    old_order = Order.query.filter_by(phone=data['phone'], is_completed=False, dinner_time=data['dinner_time']).first()
     if old_order:
         return jsonify(error_message('你刚刚已预约过了')), 421
 
-    room_ = Room.query.filter_by(id=data['room_id']).first()
-    if room_ and not room_.can_book:
-        return jsonify(error_message('房间已经被预定了')), 421
+    room_id = data['room_id']
+    rooms = Room.query.filter(Room.id.in_(room_id)).all()
 
+    can_order, un_room = Order.can_order_today(data['room_id'], data['dinner_time'].split()[0])
+    if not can_order:
+        un_room = Room.query.get(un_room)
+        return jsonify(error_message(f'房间 [{un_room.name}] 今天已经被预定了，请预约其他日期')), 421
+
+    del data['room_id']
     order_info = Order(**data)
     db.session.add(order_info)
     db.session.flush()
-    return jsonify(ok_message({'data': order_info.to_dict()}))
+
+    order_info.room = rooms
+    return jsonify(ok_message({'data': order_info.to_json()}))

@@ -6,6 +6,12 @@ class StoryType(Enum):
     room = '房间故事'
 
 
+class SpicyType(Enum):
+    low = '微辣'
+    normal = '中辣'
+    high = '非常辣'
+
+
 class LanguageType(Enum):
     zh = '中文'
     en = '英文'

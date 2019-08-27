@@ -50,7 +50,7 @@ class Settings(Config):
 
     DOMAIN['user']['schema']['role']['data_relation']['embeddable'] = True
     DOMAIN['room']['schema']['story']['schema']['data_relation']['embeddable'] = True
-    DOMAIN['order']['schema']['room']['data_relation']['embeddable'] = True
+    DOMAIN['order']['schema']['room']['schema']['data_relation']['embeddable'] = True
 
     # DOMAIN['story']['item_methods'] = ['GET', 'PUT', 'PATCH']
     DOMAIN['contact']['item_methods'] = ['GET', 'PUT', 'PATCH']

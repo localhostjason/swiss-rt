@@ -1,5 +1,8 @@
 from ..db import db
 from .enums import *
+from datetime import datetime
+from .order import Order
+from sqlalchemy import func
 
 
 class Contact(db.Model):
@@ -43,5 +46,10 @@ class Room(db.Model):
 
     @property
     def can_book(self):
-        no_completed_order = [v.id for v in self.order if not v.is_completed]
-        return not no_completed_order
+        now = datetime.now().strftime('%Y-%m-%d')
+        order = Order.query.filter(
+            Order.is_completed.is_(False),
+            func.strftime("%Y-%m-%d", Order.dinner_time) == now
+        ).first()
+        no_order = [v for v in order.room if v.id == self.id] if order else []
+        return not no_order
