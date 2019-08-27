@@ -3,7 +3,11 @@
     <el-col :span="24">
       <el-table v-loading="loading" :data="data" border fit ref="table" @selection-change="selectionChange">
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="room.name" label="房间" width="150"></el-table-column>
+        <el-table-column prop="room" label="房间" width="150">
+          <template slot-scope="scope">
+            <el-tag v-for="item in scope.row.room" :key="item.name" class="mr-5">{{item.name}}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column prop="number" label="用餐人数" width="80"></el-table-column>
         <el-table-column prop="budget" label="人均预算" width="120"></el-table-column>
         <el-table-column prop="dinner_time" label="用餐时间" width="150"></el-table-column>
