@@ -28,8 +28,8 @@ class Order(db.Model):
                            backref=db.backref('order', lazy='subquery'))
 
     # 暂时 去掉 选菜 环节
-    # food = db.relationship('Food', secondary=relation_order_food, lazy='subquery',
-    #                        backref=db.backref('order', lazy='subquery'))
+    food = db.relationship('Food', secondary=relation_order_food, lazy='subquery',
+                           backref=db.backref('order', lazy='subquery'))
 
     @classmethod
     def can_order_today(cls, room_id, dinner_time):
@@ -49,5 +49,6 @@ class Order(db.Model):
 
     def to_json(self):
         d = self.to_dict()
-        d['room'] = [v.id for v in self.room]
+        d['room'] = [v.id for v in self.room] if self.room else []
+        d['food'] = [v.id for v in self.food] if self.food else []
         return d

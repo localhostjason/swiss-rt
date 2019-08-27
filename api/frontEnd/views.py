@@ -135,15 +135,24 @@ def create_order():
     room_id = data['room_id']
     rooms = Room.query.filter(Room.id.in_(room_id)).all()
 
+    food_id = data.get('taboo_food_id')
+    foods = []
+    if food_id:
+        foods = Food.query.filter(Food.id.in_(food_id)).all()
+
     can_order, un_room = Order.can_order_today(data['room_id'], data['dinner_time'].split()[0])
     if not can_order:
         un_room = Room.query.get(un_room)
         return jsonify(error_message(f'房间 [{un_room.name}] 今天已经被预定了，请预约其他日期')), 421
 
     del data['room_id']
+    del data['taboo_food_id']
     order_info = Order(**data)
     db.session.add(order_info)
     db.session.flush()
 
     order_info.room = rooms
+
+    if foods:
+        order_info.food = foods
     return jsonify(ok_message({'data': order_info.to_json()}))
