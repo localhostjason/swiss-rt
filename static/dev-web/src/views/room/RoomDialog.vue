@@ -19,6 +19,12 @@
           <el-form-item label="起订人数:" prop="limit_number">
             <el-input v-model="form.limit_number"></el-input>
           </el-form-item>
+
+          <el-form-item label="能立即预约:" prop="can_book">
+            <el-switch v-model="form.can_book"
+                       active-color="#13ce66"
+                       inactive-color="#ff4949"></el-switch>
+          </el-form-item>
           <el-form-item label="简介:" prop="limit_number">
             <el-input
               type="textarea"
@@ -52,6 +58,7 @@
           limit_number: null,
           name: null,
           desc: null,
+          can_book: true,
         },
 
         room_id: null,

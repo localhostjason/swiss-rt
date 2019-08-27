@@ -7,6 +7,12 @@
           <el-table-column prop="id" label="ID" sortable width="80"></el-table-column>
           <el-table-column prop="name" label="名称" sortable width="130"></el-table-column>
           <el-table-column prop="limit_number" label="起订人数" width="100"></el-table-column>
+          <el-table-column prop="can_book" label="能立即预定" width="100">
+            <template slot-scope="scope">
+              <span v-if="scope.row.can_book">能</span>
+              <span v-else>不能</span>
+            </template>
+          </el-table-column>
           <el-table-column prop="desc" label="简介" width="100">
             <template slot-scope="scope">
               <span v-if="scope.row.desc">有</span>
