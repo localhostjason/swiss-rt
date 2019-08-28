@@ -39,7 +39,8 @@ def room():
 
     _room = room_query.all()
 
-    return jsonify(ok_message({'data': [v.to_dict() for v in _room]}))
+    # print([v.to_dict() for v in _room])
+    return jsonify(ok_message({'data': [v.to_dict(remove_key=['order']) for v in _room]}))
 
 
 @app.route('/api/foods')
