@@ -159,7 +159,13 @@ def create_order():
         return jsonify(error_message(f'房间 [{un_room.name}] 今天已经被预定了，请预约其他日期')), 421
 
     del data['room_id']
-    del data['taboo_food_id']
+    if foods:
+        del data['taboo_food_id']
+    if not data.get('spicy'):
+        try:
+            del data['spicy']
+        except:
+            pass
     order_info = Order(**data)
     db.session.add(order_info)
     db.session.flush()
