@@ -29,7 +29,6 @@
     directives: {
       waves
     },
-    props: ['status'],
     components: {
       InfoDialog
     },
@@ -40,13 +39,8 @@
         }
       }
     },
-    watch: {
-      status(val) {
-        this.$refs.infoDialog.setFoodType(val);
-      }
-    },
     mounted() {
-      this.$refs.infoDialog.setFoodType(this.status);
+      this.$refs.infoDialog.setFoodType();
     },
     methods: {
       handleFilter() {
@@ -60,7 +54,7 @@
         this.$emit('filterInfo', result)
       },
       createInfo() {
-        this.$refs.infoDialog.showInfoDialog(null, this.status);
+        this.$refs.infoDialog.showInfoDialog(null);
       },
       toGetInfoList() {
         this.$emit('getInfoList')

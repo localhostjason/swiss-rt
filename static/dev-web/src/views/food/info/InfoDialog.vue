@@ -26,14 +26,14 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="价格:" prop="price" v-if="status === 'originality'">
+          <el-form-item label="价格:" prop="price">
             <el-input v-model="form.price"></el-input>
           </el-form-item>
-          <el-form-item label="价格单位:" prop="price_unit" v-if="status === 'originality'">
+          <el-form-item label="价格单位:" prop="price_unit">
             <el-input v-model="form.price_unit"></el-input>
           </el-form-item>
 
-          <el-form-item label="显示首页:" prop="is_show_dash" v-if="status === 'originality'">
+          <el-form-item label="显示首页:" prop="is_show_dash">
             <el-switch
               v-model="form.is_show_dash"
               active-color="#13ce66"
@@ -58,14 +58,6 @@
   import {updateFood, createFood} from '@/api/food/info'
   import _ from 'lodash'
 
-  const validatePrice = (rule, value, callback) => {
-    if (!value && this.status === 'originality') callback(new Error('请输入价格'));
-    callback();
-  };
-  const validatePriceUnit = (rule, value, callback) => {
-    if (!value && this.status === 'originality') callback(new Error('请输入价格单位'));
-    callback();
-  };
   export default {
     name: "RoomDialog",
     data() {
@@ -86,8 +78,6 @@
         info_id: null,
         foodTypes: [],
 
-        status: null,
-
         rules: {
           name: [
             {required: true, message: '请输入名称', trigger: 'blur'},
@@ -96,36 +86,28 @@
             {required: true, message: '请选择菜品分类', trigger: 'blur'},
           ],
           price: [
-            {validator: validatePrice, type: Number, message: '请选填写价格', trigger: 'blur'},
+            {required: true, message: '请选填写价格', trigger: 'blur'},
           ],
           price_unit: [
-            {validator: validatePriceUnit, message: '请选填写价格单位', trigger: 'blur'},
+            {required: true, message: '请选填写价格单位', trigger: 'blur'},
           ],
         }
       }
     },
     methods: {
-      setFoodType(status) {
-        this.status = status;
-
-        this.foodTypes = status === 'originality' ? [{
+      setFoodType() {
+        this.foodTypes = [{
           value: 'chives',
           label: '荤菜'
         }, {
           value: 'vegetarian',
           label: '素菜'
-        }] : [{
-          value: 'chives_garnish',
-          label: '荤类配菜'
-        }, {
-          value: 'vegetarian_garnish',
-          label: '素类配菜'
         }];
       },
 
-      showInfoDialog(row = null, status) {
+      showInfoDialog(row = null) {
         this.dialog.visible = true;
-        this.setFoodType(status);
+        this.setFoodType();
         this.dialog.title = row ? '更新菜品' : '创建菜品';
 
         this.$nextTick(() => {
@@ -146,7 +128,7 @@
           if (!valid) return false;
           const params = {...this.form};
           params['price'] = Number(params['price']);
-          if (this.status === 'originality' && !params['price']) {
+          if (!params['price']) {
             this.$message.error('价格请填写数字');
             return false
           }

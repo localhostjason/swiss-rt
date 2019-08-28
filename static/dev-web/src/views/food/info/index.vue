@@ -5,21 +5,14 @@
 
     <el-row>
       <el-col :span="24">
-        <el-tabs v-model="status" type="border-card" @tab-click="handleClickTab">
 
-          <el-tab-pane v-for="item in orderType" :label="item.label" :name="item.value" :key="item.value">
+        <filter-table @getInfoList="getInfoList" @filterInfo="filterInfo"></filter-table>
 
-            <filter-table :status="status" @getInfoList="getInfoList" @filterInfo="filterInfo"></filter-table>
-
-            <info-table :data="data"
-                        :status="status"
-                        :list-loading="listLoading"
-                        :page-query="filter.pageQuery"
-                        :total="total"
-                        @getInfoList="getInfoList"></info-table>
-          </el-tab-pane>
-
-        </el-tabs>
+        <info-table :data="data"
+                    :list-loading="listLoading"
+                    :page-query="filter.pageQuery"
+                    :total="total"
+                    @getInfoList="getInfoList"></info-table>
       </el-col>
     </el-row>
 
@@ -51,7 +44,7 @@
         orderType,
         status: 'originality',
         data: [],
-        total:0,
+        total: 0,
         filter: {
           argsQuery: {},
           pageQuery: {
@@ -66,12 +59,6 @@
       this.getInfoList();
     },
     methods: {
-      handleClickTab(tab) {
-        this.status = tab.name;
-        this.filter.argsQuery = {};
-        this.filter.pageQuery.page = 1;
-        this.getInfoList();
-      },
 
       async getInfoList() {
         const params = {...this.filter};
