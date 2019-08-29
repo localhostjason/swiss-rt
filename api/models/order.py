@@ -57,7 +57,12 @@ class Order(db.Model):
 
         un_room_desc = list(set(_rd) & set(room_d))
 
-        return not (un_room and un_room_desc), un_room, ','.join(un_room_desc)
+        if room_desc:
+            r = un_room and un_room_desc
+        else:
+            r = un_room
+
+        return not r, un_room, ','.join(un_room_desc)
 
     def to_json(self):
         d = self.to_dict()
