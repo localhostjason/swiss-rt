@@ -27,12 +27,14 @@ class Order(db.Model):
     room = db.relationship('Room', secondary=relation_order_room, lazy='subquery',
                            backref=db.backref('order', lazy='subquery'))
 
+    room_desc = db.Column(db.String(128))
+
     # 暂时 去掉 选菜 环节
     food = db.relationship('Food', secondary=relation_order_food, lazy='subquery',
                            backref=db.backref('order', lazy='subquery'))
 
     @classmethod
-    def can_order_today(cls, room_id, dinner_time):
+    def can_order_today(cls, room_id, dinner_time, room_desc):
         order = cls.query.filter(
             cls.is_completed.is_(False)
         ).group_by(
@@ -40,12 +42,22 @@ class Order(db.Model):
         ).having(
             func.strftime("%Y-%m-%d", cls.dinner_time) == dinner_time
         ).first()
+
         rooms = []
+        _rd = []
         if order:
-            rooms = [v.id for v in order.room]
+            rooms = [v.id for v in order.room] if order.room else []
+            _rd = order.room_desc.split(',') if order.room_desc else []
+
+        room_d = []
+        if room_desc:
+            room_d = room_desc.split(',')
 
         un_room = list(set(room_id) & set(rooms))
-        return not un_room, un_room
+
+        un_room_desc = list(set(_rd) & set(room_d))
+
+        return not (un_room and un_room_desc), un_room, ','.join(un_room_desc)
 
     def to_json(self):
         d = self.to_dict()

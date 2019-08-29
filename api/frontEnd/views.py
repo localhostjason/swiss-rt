@@ -154,9 +154,12 @@ def create_order():
     if food_id:
         foods = Food.query.filter(Food.id.in_(food_id)).all()
 
-    can_order, un_room = Order.can_order_today(data['room_id'], data['dinner_time'].split()[0])
+    room_desc = data.get('room_desc')
+    can_order, un_room, un_desc = Order.can_order_today(data['room_id'], data['dinner_time'].split()[0], room_desc)
     if not can_order:
         un_room = Room.query.get(un_room)
+        if un_desc:
+            return jsonify(error_message(f'房间 [{un_room.name}] [{un_desc}]卓今天已经被预定了，请预约其他日期')), 421
         return jsonify(error_message(f'房间 [{un_room.name}] 今天已经被预定了，请预约其他日期')), 421
 
     del data['room_id']
@@ -167,6 +170,7 @@ def create_order():
             del data['spicy']
         except:
             pass
+
     order_info = Order(**data)
     db.session.add(order_info)
     db.session.flush()
