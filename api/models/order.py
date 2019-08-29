@@ -36,25 +36,21 @@ class Order(db.Model):
     @classmethod
     def can_order_today(cls, room_id, dinner_time, room_desc):
         order = cls.query.filter(
-            cls.is_completed.is_(False)
-        ).group_by(
-            func.strftime("%Y-%m-%d", cls.dinner_time)
-        ).having(
+            cls.is_completed.is_(False),
             func.strftime("%Y-%m-%d", cls.dinner_time) == dinner_time
-        ).first()
+        ).all()
 
-        rooms = []
-        _rd = []
-        if order:
-            rooms = [v.id for v in order.room] if order.room else []
-            _rd = order.room_desc.split(',') if order.room_desc else []
+        rooms_ = [v.room for v in order]
+        rooms = list(set([v.id for v in sum(rooms_, [])]))
+
+        _rd = [v.room_desc.split(',') for v in order if v.room_desc]
+        _rd = list(set(sum(_rd, [])))
 
         room_d = []
         if room_desc:
             room_d = room_desc.split(',')
 
         un_room = list(set(room_id) & set(rooms))
-
         un_room_desc = list(set(_rd) & set(room_d))
 
         if room_desc:
