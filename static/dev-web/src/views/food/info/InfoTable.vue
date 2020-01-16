@@ -6,7 +6,11 @@
           <el-table-column type="selection" width="50" align="center" fixed="left"></el-table-column>
           <el-table-column prop="name" label="菜名称" sortable width="130"></el-table-column>
           <el-table-column prop="type_value" label="类型" sortable width="130"></el-table-column>
-          <el-table-column prop="price" label="价格" sortable width="100"></el-table-column>
+          <el-table-column prop="price" label="价格" sortable width="100">
+            <template slot-scope="scope">
+              <span v-if="scope.row.price">{{Number(scope.row.price).toFixed(2)}}</span>
+            </template>
+          </el-table-column>
           <el-table-column prop="price_unit" label="价格单位" width="100"></el-table-column>
           <el-table-column prop="is_show_dash" label="显示首页" width="100">
             <template slot-scope="scope">
@@ -92,7 +96,8 @@
       pageQuery: {
         type: Object,
         required: true,
-        default: () => {}
+        default: () => {
+        }
       },
       total: {
         required: true
